@@ -2,11 +2,15 @@
 
 @import url(http://fonts.googleapis.com/css?family=Lobster:500,300,700,400);
 
-body {
+html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+.top-10 {
+    margin-top: 10px;
 }
 
 .vertical-center {
@@ -39,6 +43,10 @@ body {
     font-size: 2em;
 }
 
+.font-med {
+    font-size: 1.5em;
+}
+
 .form-signin {
     max-width: 330px;
     padding: 15px;
@@ -65,25 +73,53 @@ input[type="checkbox"]:after,
     min-height: 100%;
 }
 
-#inputEmail, #inputPassword {
+#inputEmail, #inputPassword, #inputSearch {
     color: #FFFFFF;
 }
 
 #inputEmail::-webkit-input-placeholder,
-#inputPassword::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+#inputPassword::-webkit-input-placeholder,
+#inputSearch::-webkit-input-placeholder{ /* WebKit, Blink, Edge */
     color:    #FFFFFF;
 }
 #inputEmail:-moz-placeholder,
-#inputPassword:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+#inputPassword:-moz-placeholder,
+#inputSearch:-moz-placeholder{ /* Mozilla Firefox 4 to 18 */
     color:    #FFFFFF;
     opacity:  1;
 }
 #inputEmail::-moz-placeholder,
-#inputPassword::-moz-placeholder { /* Mozilla Firefox 19+ */
+#inputPassword::-moz-placeholder,
+#inputSearch::-moz-placeholder{ /* Mozilla Firefox 19+ */
     color:    #FFFFFF;
     opacity:  1;
 }
 #inputEmail:-ms-input-placeholder,
-#inputPassword:-ms-input-placeholder { /* Internet Explorer 10-11 */
+#inputPassword:-ms-input-placeholder,
+#inputSearch:-ms-input-placeholder{ /* Internet Explorer 10-11 */
     color:    #FFFFFF;
+}
+
+.navbar-lunchtime {
+    background-color: #DB4437;
+}
+
+.brand {
+    -webkit-font-smoothing: antialiased;
+    font-family: "Lobster",sans-serif;
+    font-weight: 400;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+#map-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: absolute;
+    margin-top: 60px;
+    bottom:0;
+    top:0;
+    left:0;
+    right:0;
 }

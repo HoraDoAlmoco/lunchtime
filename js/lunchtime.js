@@ -1,7 +1,7 @@
 
 var lunchtime = angular.module('lunchtime', [
     'ui.router','ngResource', 'mongolabResourceHttp',
-    'ngCookies', 'ngAnimate'
+    'ngCookies', 'ngAnimate', 'ui.bootstrap'
     ])
     .run(function ($rootScope, $state, $cookies) {
 
@@ -9,7 +9,7 @@ var lunchtime = angular.module('lunchtime', [
 
             var requireLogin = toState.data.requiredlogin;
             //ver se esta no cookie
-            var angularCookieUsrObj = $cookies.getObject('angularCookieKeyUsrObj');
+            var angularCookieUsrObj = $cookies.getObject('ltCookieKeyUsrObj');
             if(angularCookieUsrObj) {
                 $rootScope.currentUser = angularCookieUsrObj;
             }
@@ -27,6 +27,7 @@ var lunchtime = angular.module('lunchtime', [
             .state('home', {
                 url: "/",
                 templateUrl: "views/home.html",
+                controller: 'HomeController',
                 data : {
                     requiredlogin : false
                 }
