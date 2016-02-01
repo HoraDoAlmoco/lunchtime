@@ -9,12 +9,18 @@ body {
     padding: 0;
 }
 
-.loginbg {
-    background: url('../img/core/cover2.png') center no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+.vertical-center {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-cover {
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;;
+    -o-background-size: cover !important;;
+    background-size: cover !important;;
 }
 
 .form-signin-heading {
@@ -37,4 +43,36 @@ body {
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
+    color: #FFFFFF;
+}
+
+.subtitle {
+    font-size: 16px;
+}
+
+input[type="checkbox"]:after, .checkbox input[type="checkbox"]:after, .checkbox-inline input[type="checkbox"]:after {
+    border: 2px solid #FFFFFF;
+}
+
+.mainsec {
+    min-height: 100%;
+}
+
+#inputEmail, #inputPassword {
+    color: #FFFFFF;
+}
+
+#inputEmail::-webkit-input-placeholder, #inputPassword::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #FFFFFF;
+}
+#inputEmail:-moz-placeholder, #inputPassword:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #FFFFFF;
+    opacity:  1;
+}
+#inputEmail::-moz-placeholder, #inputPassword::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #FFFFFF;
+    opacity:  1;
+}
+#inputEmail:-ms-input-placeholder, #inputPassword:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #FFFFFF;
 }
