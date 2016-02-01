@@ -48,9 +48,16 @@ body {
 
 .subtitle {
     font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 300;
+    text-shadow: 0 0 10px rgba(0,0,0,1.0);
+    line-height: 1.2;
+    margin: 0 0 25px;
 }
 
-input[type="checkbox"]:after, .checkbox input[type="checkbox"]:after, .checkbox-inline input[type="checkbox"]:after {
+input[type="checkbox"]:after,
+.checkbox input[type="checkbox"]:after,
+.checkbox-inline input[type="checkbox"]:after {
     border: 2px solid #FFFFFF;
 }
 
@@ -62,17 +69,21 @@ input[type="checkbox"]:after, .checkbox input[type="checkbox"]:after, .checkbox-
     color: #FFFFFF;
 }
 
-#inputEmail::-webkit-input-placeholder, #inputPassword::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+#inputEmail::-webkit-input-placeholder,
+#inputPassword::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    #FFFFFF;
 }
-#inputEmail:-moz-placeholder, #inputPassword:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    #FFFFFF;
-    opacity:  1;
-}
-#inputEmail::-moz-placeholder, #inputPassword::-moz-placeholder { /* Mozilla Firefox 19+ */
+#inputEmail:-moz-placeholder,
+#inputPassword:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     color:    #FFFFFF;
     opacity:  1;
 }
-#inputEmail:-ms-input-placeholder, #inputPassword:-ms-input-placeholder { /* Internet Explorer 10-11 */
+#inputEmail::-moz-placeholder,
+#inputPassword::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #FFFFFF;
+    opacity:  1;
+}
+#inputEmail:-ms-input-placeholder,
+#inputPassword:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color:    #FFFFFF;
 }
