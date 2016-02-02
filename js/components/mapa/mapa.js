@@ -1,7 +1,7 @@
 
 lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo',
-    function($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo){
+    'Usuario', 'Grupo', 'Listas', 'Locais',
+    function($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais){
         $rootScope.bodybg = {
             background: '#db4437'
         };
@@ -20,10 +20,18 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             mapTypeControl: false,
             streetViewControl: true,
-            disableDefaultUI: true
+            disableDefaultUI: true,
+            mapTypeControlOptions: {
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'lunchtimemap']
+            }
         };
 
+        var lunchtimeMapType = new google.maps.StyledMapType(Listas.lunchtimeMapType);
+
         $scope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        $scope.map.mapTypes.set('lunchtimemap', lunchtimeMapType);
+        $scope.map.setMapTypeId('lunchtimemap');
 
         var primarker = new google.maps.Marker({
             map: $scope.map,
@@ -45,5 +53,16 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             google.maps.event.trigger(selectedMarker, 'click');
         };
 
-
+        $scope.initMarkers = function(){
+            var query = {
+                "grupos" : {
+                    $elemMatch : {
+                        "grupo" : grupoPrincipal._id.$oid
+                    }
+                }
+            };
+            Locais.query(query).then(function(locais){
+                console.log(locais);
+            });
+        };
     }]);

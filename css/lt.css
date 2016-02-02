@@ -113,7 +113,7 @@ input[type="checkbox"]:after,
 }
 
 #map-canvas {
-    width: 100%;
+    width: auto;
     height: auto;
     display: block;
     position: absolute;
@@ -122,4 +122,67 @@ input[type="checkbox"]:after,
     top:0;
     left:0;
     right:0;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #FFFFFF !important;
+    font-size: 16px;
+}
+
+.globe-locais {
+    color: #FFFFFF;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #FFFFFF;
+}
+
+.menu {
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    width: 315px;
+    top: 64px;
+    z-index: 4;
+    -webkit-transform: translateX(-325px);
+    transform: translateX(-325px);
+    -webkit-transition: -webkit-transform .15s ease-in-out;
+    transition: transform .15s ease-in-out;
+    will-change: top,left;
+    background-color: #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.28);
+    line-height: 40px;
+}
+
+.open {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+
+.map-canvas.open  {
+    margin-left: 315px;
+}
+
+.map-card-detail-lg {
+    height: 120px;
+    bottom: 0;
+    left: 314px;
+    overflow: auto;
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+    -webkit-transform: translateY(130px);
+    transform: translateY(130px);
+    -webkit-transition: -webkit-transform .20s ease-in-out;
+    transition: transform .20s ease-in-out;
+    will-change: bottom,left;
+    background-color: #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,.14),2px -4px 8px rgba(0,0,0,.28);
+    line-height: 40px;
+}
+
+.map-card-detail-lg.open {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
 }
