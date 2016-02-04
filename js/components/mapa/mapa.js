@@ -61,53 +61,82 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             Locais.query(query).then(function(locais){
                 var groupLatLng = new google.maps.LatLng(grupoPrincipal.latitude, grupoPrincipal.longitude);
                 locais.forEach(function(local){
-                    console.log(local);
                     var info = {};
                     var localLatLng = new google.maps.LatLng(local.latitude, local.longitude);
-                    var service = new google.maps.DistanceMatrixService();
-                    var distancia;
-                    service.getDistanceMatrix(
-                        {
-                            origins: [groupLatLng],
-                            destinations: [localLatLng],
-                            travelMode: google.maps.TravelMode.WALKING,
-                            unitSystem: google.maps.UnitSystem.METRIC,
-                            avoidHighways: false,
-                            avoidTolls: false,
-                        }, function(response, status){
-                            distancia = response.rows[0].elements[0].distance.value;
-                        });
 
-                    info.titulo = local.grupos[0].titulo;
+                    var localGrupo = recuperaLocalGrupo(grupoPrincipal._id.$oid, local.grupos);
+
+                    var possuiVotos = localGrupo.votos && localGrupo.votos.length > 0;
+                    if(possuiVotos) {
+                        var service = new google.maps.DistanceMatrixService();
+                        service.getDistanceMatrix(
+                            {
+                                origins: [groupLatLng],
+                                destinations: [localLatLng],
+                                travelMode: google.maps.TravelMode.WALKING,
+                                unitSystem: google.maps.UnitSystem.METRIC,
+                                avoidHighways: false,
+                                avoidTolls: false,
+                            }, function (response, status) {
+                                info.distancia = response.rows[0].elements[0].distance.value;
+                            });
+                    }
+
+                    info.titulo = localGrupo.titulo;
+                    info.endereco = local.endereco;
                     info.latitude = local.latitude;
                     info.longitude = local.longitude;
-                    info.votos = local.grupos[0].votos;
-                    info.votado = local.grupos[0].votado;
+                    info.votos = localGrupo.votos;
+                    info.votado = false;
+                    for(var a = 0; a < localGrupo.votos.length; a++) {
+                        if(localGrupo.votos[a] === $rootScope.currentUser._id.$oid) {
+                            info.votado = true;
+                        }
+                    }
+                    var infos = localGrupo.infos;
+                    info.infos = infos;
+                    info.extra = localGrupo.categoria;
+                    info.categoria = localGrupo.categoria;
+                    for (var j = 0; j < infos.length; j++){
+                        info.extra += ", " + infos[j];
+                    }
+                    info.extra += " - " + localGrupo.valor;
 
                     createMarker(info);
                 });
             });
         };
 
+        var recuperaLocalGrupo = function(idGrupoPrincipal, grupos) {
+            var localGrupo = {};
+            for(var i = 0;i < grupos.length; i++) {
+                if(grupos[i].grupo === idGrupoPrincipal) {
+                    localGrupo = grupos[i];
+                    break;
+                }
+            }
+            return localGrupo;
+        };
+
         var createMarker = function(info) {
             var eixox = 1;
             var eixoy = 136;
-            if(Number(info.votos[0]) > 1){
-                eixox = (Number(info.votos[0]) - 1) * 35 + 1;
+            if(info.votos && Number(info.votos.length) > 1){
+                eixox = (Number(info.votos.length) - 1) * 35 + 1;
             }
-            if(info.votado != "") {
+            if(info.votado) {
                 eixoy = 92;
             }
 
             var icon;
 
-            if(Number(info.votos[0]) > 0){
+            if(info.votos && Number(info.votos.length) > 0){
                 icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-sprite.png", new google.maps.Size(33, 42), new google.maps.Point(eixox, eixoy));
             } else {
                 icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-blank.png", new google.maps.Size(33, 42));
             }
 
-            var halfPoint = Math.ceil(info.titulo.length * 3);
+            var xPoint = Math.ceil(info.titulo.length * 3);
             var marker = new MarkerWithLabel({
                 map: $scope.map,
                 position: new google.maps.LatLng(info.latitude, info.longitude),
@@ -115,11 +144,21 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                 animation : google.maps.Animation.DROP,
                 labelContent: info.titulo,
                 labelClass: "marker-labels",
-                labelAnchor: new google.maps.Point(halfPoint, 0)
+                labelAnchor: new google.maps.Point(xPoint, 0)
             });
 
+            marker.titulo = info.titulo;
+            marker.categoria = info.categoria;
+            marker.endereco = info.endereco;
+            marker.extra = info.extra;
+            marker.votos = info.votos;
+            marker.votado = info.votado;
+            marker.quantidade = info.votos.length;
+            marker.ltmarker = true;
+            marker.distancia = info.distancia ? info.distancia : 0;
+
             google.maps.event.addListener(marker, 'click', function(){
-                console.log("abrir a telinha em baixo");
+                console.log(marker);
             });
 
             $scope.markers.push(marker);
