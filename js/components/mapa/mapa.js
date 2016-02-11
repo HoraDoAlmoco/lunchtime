@@ -79,30 +79,51 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                                 avoidTolls: false,
                             }, function (response, status) {
                                 info.distancia = response.rows[0].elements[0].distance.value;
+                                info.titulo = localGrupo.titulo;
+                                info.endereco = local.endereco;
+                                info.latitude = local.latitude;
+                                info.longitude = local.longitude;
+                                info.votos = localGrupo.votos;
+                                info.votado = false;
+                                for(var a = 0; a < localGrupo.votos.length; a++) {
+                                    if(localGrupo.votos[a] === $rootScope.currentUser._id.$oid) {
+                                        info.votado = true;
+                                    }
+                                }
+                                var infos = localGrupo.infos;
+                                info.infos = infos;
+                                info.extra = localGrupo.categoria;
+                                info.categoria = localGrupo.categoria;
+                                for (var j = 0; j < infos.length; j++){
+                                    info.extra += ", " + infos[j];
+                                }
+                                info.extra += " - " + localGrupo.valor;
+
+                                createMarker(info);
                             });
-                    }
-
-                    info.titulo = localGrupo.titulo;
-                    info.endereco = local.endereco;
-                    info.latitude = local.latitude;
-                    info.longitude = local.longitude;
-                    info.votos = localGrupo.votos;
-                    info.votado = false;
-                    for(var a = 0; a < localGrupo.votos.length; a++) {
-                        if(localGrupo.votos[a] === $rootScope.currentUser._id.$oid) {
-                            info.votado = true;
+                    } else {
+                        info.titulo = localGrupo.titulo;
+                        info.endereco = local.endereco;
+                        info.latitude = local.latitude;
+                        info.longitude = local.longitude;
+                        info.votos = localGrupo.votos;
+                        info.votado = false;
+                        for(var a = 0; a < localGrupo.votos.length; a++) {
+                            if(localGrupo.votos[a] === $rootScope.currentUser._id.$oid) {
+                                info.votado = true;
+                            }
                         }
-                    }
-                    var infos = localGrupo.infos;
-                    info.infos = infos;
-                    info.extra = localGrupo.categoria;
-                    info.categoria = localGrupo.categoria;
-                    for (var j = 0; j < infos.length; j++){
-                        info.extra += ", " + infos[j];
-                    }
-                    info.extra += " - " + localGrupo.valor;
+                        var infos = localGrupo.infos;
+                        info.infos = infos;
+                        info.extra = localGrupo.categoria;
+                        info.categoria = localGrupo.categoria;
+                        for (var j = 0; j < infos.length; j++){
+                            info.extra += ", " + infos[j];
+                        }
+                        info.extra += " - " + localGrupo.valor;
 
-                    createMarker(info);
+                        createMarker(info);
+                    }
                 });
             });
         };
