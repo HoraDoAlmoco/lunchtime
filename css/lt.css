@@ -164,15 +164,11 @@ input[type="checkbox"]:after,
     margin-left: 315px;
 }
 
-.map-canvas.open-sem-menu  {
-
-}
-
 .map-card-detail-lg {
-    height: 120px;
+    min-height: 120px;
     bottom: 0;
     left: 314px;
-    overflow: auto;
+    overflow: hidden;
     position: fixed;
     width: 100%;
     z-index: 3;
@@ -194,10 +190,11 @@ input[type="checkbox"]:after,
 .map-card-detail-lg.open-sem-menu {
     -webkit-transform: translateX(0);
     transform: translateX(0);
+    left: 0;
 }
 
 .marker-labels {
-    color: #333;
+    color: #333333;
     text-align: center;
     white-space: nowrap;
     font-size: 11px;
@@ -205,4 +202,84 @@ input[type="checkbox"]:after,
     0 -1px 10px rgba(255,255,255,1),
     1px 0 10px rgba(255,255,255,1),
     -1px 0 10px rgba(255,255,255,1);
+}
+
+.row-card {
+    margin: 0;
+    padding: 5px 2px 5px 2px;
+}
+
+.divider {
+    border-right: 2px solid #DB4437;
+}
+
+.card-title {
+    color: #DB4437;
+}
+
+.card-marker-icon{
+    float: left;
+    background-size: 24px;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-drag: none;
+    background-color: #db4437;
+    border-radius: 50%;
+}
+
+.valor-vazio {
+    color: rgba(0, 0, 0, 0.5);
+    margin-left: -5px;
+}
+
+.valor-vazio-list {
+    color: rgba(0, 0, 0, 0.5);
+    margin-left: -3px;
+}
+
+.card-voted {
+    background: #DB4437;
+    color: #FFFFFF;
+}
+.card-voted .h4,.card-voted  .list-group-item-text {
+    color: #FFFFFF !important;
+}
+
+.card-voted .badge {
+    color: #DB4437 !important;
+    background: #FFFFFF;
+}
+
+.card-unvoted {
+    background: #FFFFFF;
+    color: #DB4437;
+}
+.card-unvoted .h4, .card-unvoted .list-group-item-text {
+    color: #DB4437 !important;
+}
+
+.card-unvoted .badge {
+    color: #FFFFFF !important;
+    background: #DB4437;
+}
+
+.card-distance {
+    font-size: 20px;
+    left: 15px;
+    position: relative;
+    float: right;
+    width: 50px;
+    border-left: 1px solid #FFFFFF;
+}
+
+.card-distance-top {
+    top: 10px;
+    position: relative;
+}
+
+.card-distance-bottom {
+    bottom: 10px;
+    position: relative;
 }

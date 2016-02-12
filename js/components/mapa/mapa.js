@@ -5,6 +5,11 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
         $rootScope.bodybg = {
             background: '#db4437'
         };
+        $scope.openCloseCardClass = "";
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
 
         //pequeno teste para verificar se é o mesmo que esta no cookie.
         //enconomizo tempo e busca
@@ -50,17 +55,47 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             google.maps.event.trigger(selectedMarker, 'click');
         };
 
-        $scope.openCloseCard = function(){
-            console.log($scope.openCloseCardClass);
-            if($scope.openCloseClass === "open") {
-                $scope.openCloseCardClass !== "open-com-menu" ? $scope.openCloseCardClass = "open-com-menu" : $scope.openCloseCardClass = "";
-            } else {
-                $scope.openCloseCardClass !== "open-sem-menu" ? $scope.openCloseCardClass = "open-sem-menu" : $scope.openCloseCardClass = "";
+        function criarInfoObj(localGrupo, local, distancia){
+
+            var info = {};
+
+            info.distancia = distancia ? distancia : 0;
+            info.titulo = localGrupo.titulo;
+            info.endereco = local.endereco;
+            info.latitude = local.latitude;
+            info.longitude = local.longitude;
+            info.votos = localGrupo.votos;
+            info.votado = false;
+            for(var a = 0; a < localGrupo.votos.length; a++) {
+                if(localGrupo.votos[a] === $rootScope.currentUser._id.$oid) {
+                    info.votado = true;
+                }
             }
+            var infos = localGrupo.infos;
+            info.infos = infos;
+            info.extra = capitalizeFirstLetter(localGrupo.categoria);
+            info.categoria = localGrupo.categoria;
+            for (var j = 0; j < infos.length; j++){
+                info.extra += ", " + infos[j];
+            }
+            info.valor = localGrupo.valor;
+            var tamanho = 4 - info.valor.length;
+            info.valorVazio = "";
+            for(var b = 0;b < tamanho; b++) {
+                info.valorVazio += "$";
+            }
+
+            return info;
+
+        }
+
+        $scope.markerClicado = function(marker) {
+            $scope.markerSelecionado = marker;
+            $scope.$apply();
         };
 
         $scope.initMarkers = function(){
-            $scope.openCloseCardClass = "";
+            $scope.markerSelecionado = {};
             var query = {
                 "grupos" : {
                     $elemMatch : {
@@ -88,50 +123,11 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                                 avoidHighways: false,
                                 avoidTolls: false,
                             }, function (response, status) {
-                                info.distancia = response.rows[0].elements[0].distance.value;
-                                info.titulo = localGrupo.titulo;
-                                info.endereco = local.endereco;
-                                info.latitude = local.latitude;
-                                info.longitude = local.longitude;
-                                info.votos = localGrupo.votos;
-                                info.votado = false;
-                                for(var a = 0; a < localGrupo.votos.length; a++) {
-                                    if(localGrupo.votos[a] === $rootScope.currentUser._id.$oid) {
-                                        info.votado = true;
-                                    }
-                                }
-                                var infos = localGrupo.infos;
-                                info.infos = infos;
-                                info.extra = localGrupo.categoria;
-                                info.categoria = localGrupo.categoria;
-                                for (var j = 0; j < infos.length; j++){
-                                    info.extra += ", " + infos[j];
-                                }
-                                info.extra += " - " + localGrupo.valor;
-
+                                info = criarInfoObj(localGrupo, local, response.rows[0].elements[0].distance.value);
                                 createMarker(info);
                             });
                     } else {
-                        info.titulo = localGrupo.titulo;
-                        info.endereco = local.endereco;
-                        info.latitude = local.latitude;
-                        info.longitude = local.longitude;
-                        info.votos = localGrupo.votos;
-                        info.votado = false;
-                        for(var a = 0; a < localGrupo.votos.length; a++) {
-                            if(localGrupo.votos[a] === $rootScope.currentUser._id.$oid) {
-                                info.votado = true;
-                            }
-                        }
-                        var infos = localGrupo.infos;
-                        info.infos = infos;
-                        info.extra = localGrupo.categoria;
-                        info.categoria = localGrupo.categoria;
-                        for (var j = 0; j < infos.length; j++){
-                            info.extra += ", " + infos[j];
-                        }
-                        info.extra += " - " + localGrupo.valor;
-
+                        info = criarInfoObj(localGrupo, local);
                         createMarker(info);
                     }
                 });
@@ -187,9 +183,24 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             marker.quantidade = info.votos.length;
             marker.ltmarker = true;
             marker.distancia = info.distancia ? info.distancia : 0;
+            marker.valor = info.valor;
+            marker.valorVazio = info.valorVazio;
 
             google.maps.event.addListener(marker, 'click', function(){
-                $scope.openCloseCard();
+                var mapCard = $(".map-card-detail-lg");
+                if($rootScope.openCloseClass === "open") {
+                    if(!$(mapCard).hasClass("open-com-menu")){
+                        $(mapCard).addClass("open-com-menu");
+                        $rootScope.openCloseCardClass = "open-com-menu";
+                    }
+                } else {
+                    if(!$(mapCard).hasClass("open-sem-menu")){
+                        $(mapCard).addClass("open-sem-menu");
+                        $rootScope.openCloseCardClass = "open-sem-menu";
+                    }
+                }
+                $scope.markerClicado(marker);
+                $scope.map.setCenter(marker.getPosition());
             });
 
             $scope.markers.push(marker);

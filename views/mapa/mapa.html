@@ -1,14 +1,14 @@
 <div ng-controller="MapaController" ng-init="initMarkers()">
     <div header></div>
-    <div id="map-canvas" class="map-canvas" ng-class="openCloseClass"></div>
+    <div id="map-canvas" class="map-canvas" ng-class="openCloseMapClass"></div>
     <div class="menu" ng-class="openCloseClass">
         <div class="lista-cards">
-
+            <listcard></listcard>
         </div>
     </div>
     <div class="map-card-detail-lg" ng-class="openCloseCardClass">
-        <div class="card-detail-lg">
-
+        <div class="card-detail-lg list-group">
+            <footercard></footercard>
         </div>
     </div>
 </div>

@@ -32,9 +32,39 @@ lunchtime
             restrict : 'A',
             replace: true,
             templateUrl: 'views/directives/header.html',
-            controller : ['$scope', function($scope){
+            controller : ['$scope','$rootScope', function($scope, $rootScope){
+                $rootScope.openCloseClass = "";
+                $rootScope.openCloseMapClass = "";
                 $scope.openClose = function(){
-                    $scope.openCloseClass !== "open" ? $scope.openCloseClass = "open" : $scope.openCloseClass = "";
+                    var mapCard = $(".map-card-detail-lg");
+                    $rootScope.openCloseClass !== "open" ? $rootScope.openCloseClass = "open" : $rootScope.openCloseClass = "";
+                    $rootScope.openCloseClass === "open" ? $rootScope.openCloseMapClass = "open-com-menu" : $rootScope.openCloseMapClass = "";
+                    if($rootScope.openCloseClass === "open" && $rootScope.openCloseCardClass === "open-sem-menu") {
+                        $(mapCard).addClass("open-com-menu");
+                        $(mapCard).removeClass("open-sem-menu");
+                        $rootScope.openCloseCardClass = "open-com-menu";
+                    } else if ($rootScope.openCloseClass === "" && $rootScope.openCloseCardClass === "open-com-menu"){
+                        $(mapCard).addClass("open-sem-menu");
+                        $(mapCard).removeClass("open-com-menu");
+                        $rootScope.openCloseCardClass = "open-sem-menu";
+                    }
+                };
+            }]
+        }
+    })
+    .directive('footercard', function(){
+        return {
+            restrict: "E",
+            templateUrl: "views/directives/footercard.html"
+        }
+    })
+    .directive('listcard', function(){
+        return {
+            restrict: "E",
+            templateUrl: "views/directives/listcard.html",
+            controller: ['$scope', function($scope){
+                $scope.classCard = function(marker) {
+                    return marker.votado ? "card-voted" : "card-unvoted";
                 };
             }]
         }
