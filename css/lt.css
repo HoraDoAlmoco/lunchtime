@@ -160,8 +160,12 @@ input[type="checkbox"]:after,
     transform: translateX(0);
 }
 
-.map-canvas.open  {
+.map-canvas.open-com-menu  {
     margin-left: 315px;
+}
+
+.map-canvas.open-sem-menu  {
+
 }
 
 .map-card-detail-lg {
@@ -182,7 +186,12 @@ input[type="checkbox"]:after,
     line-height: 40px;
 }
 
-.map-card-detail-lg.open {
+.map-card-detail-lg.open-com-menu {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+
+.map-card-detail-lg.open-sem-menu {
     -webkit-transform: translateX(0);
     transform: translateX(0);
 }

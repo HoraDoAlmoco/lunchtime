@@ -50,7 +50,17 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             google.maps.event.trigger(selectedMarker, 'click');
         };
 
+        $scope.openCloseCard = function(){
+            console.log($scope.openCloseCardClass);
+            if($scope.openCloseClass === "open") {
+                $scope.openCloseCardClass !== "open-com-menu" ? $scope.openCloseCardClass = "open-com-menu" : $scope.openCloseCardClass = "";
+            } else {
+                $scope.openCloseCardClass !== "open-sem-menu" ? $scope.openCloseCardClass = "open-sem-menu" : $scope.openCloseCardClass = "";
+            }
+        };
+
         $scope.initMarkers = function(){
+            $scope.openCloseCardClass = "";
             var query = {
                 "grupos" : {
                     $elemMatch : {
@@ -179,10 +189,11 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             marker.distancia = info.distancia ? info.distancia : 0;
 
             google.maps.event.addListener(marker, 'click', function(){
-                console.log(marker);
+                $scope.openCloseCard();
             });
 
             $scope.markers.push(marker);
         };
+
 
     }]);
