@@ -55,7 +55,18 @@ lunchtime
     .directive('footercard', function(){
         return {
             restrict: "E",
-            templateUrl: "views/directives/footercard.html"
+            templateUrl: "views/directives/footercard.html",
+            controller: ['$scope', '$rootScope', function($scope, $rootScope){
+                $scope.classCard = function(marker) {
+                    return marker.votado ? "card-voted" : "card-unvoted";
+                };
+                $scope.closeFooterCard = function() {
+                    var mapCard = $(".map-card-detail-lg");
+                    $(mapCard).removeClass("open-com-menu");
+                    $(mapCard).removeClass("open-sem-menu");
+                    $rootScope.openCloseCardClass = "";
+                };
+            }]
         }
     })
     .directive('listcard', function(){
@@ -66,6 +77,10 @@ lunchtime
                 $scope.classCard = function(marker) {
                     return marker.votado ? "card-voted" : "card-unvoted";
                 };
+                $scope.btnVotoTP = function(marker) {
+                    return marker.votado ? "Retirar Voto" : "Votar";
+                };
+
             }]
         }
     });

@@ -94,6 +94,14 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             $scope.$apply();
         };
 
+        google.maps.event.addListener($scope.map, 'click', function (e) {
+            var mapCard = $(".map-card-detail-lg");
+            $(mapCard).removeClass("open-com-menu");
+            $(mapCard).removeClass("open-sem-menu");
+            $rootScope.openCloseCardClass = "";
+            $scope.$apply();
+        });
+
         $scope.initMarkers = function(){
             $scope.markerSelecionado = {};
             var query = {

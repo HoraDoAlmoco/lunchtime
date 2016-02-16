@@ -13,4 +13,14 @@
             <span>{{markerSelecionado.distancia}}</span>
         </div>
     </div>
+    <div class="fab-button">
+        <button class="btn-default btn-fab" ng-class="classCard(markerSelecionado)" tooltip="{{btnVotoTP(markerSelecionado)}}">
+            <span class="glyphicon glyphicon-map-marker"></span>
+        </button>
+    </div>
+    <div class="fab-close-button">
+        <button class="btn-danger btn-close-fab" tooltip="Fechar" ng-click="closeFooterCard()">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+    </div>
 </div>

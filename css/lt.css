@@ -168,12 +168,12 @@ input[type="checkbox"]:after,
     min-height: 120px;
     bottom: 0;
     left: 314px;
-    overflow: hidden;
+    overflow: visible;
     position: fixed;
     width: 100%;
     z-index: 3;
-    -webkit-transform: translateY(130px);
-    transform: translateY(130px);
+    -webkit-transform: translateY(180px);
+    transform: translateY(180px);
     -webkit-transition: -webkit-transform .20s ease-in-out;
     transition: transform .20s ease-in-out;
     will-change: bottom,left;
@@ -185,6 +185,7 @@ input[type="checkbox"]:after,
 .map-card-detail-lg.open-com-menu {
     -webkit-transform: translateX(0);
     transform: translateX(0);
+    width: auto;
 }
 
 .map-card-detail-lg.open-sem-menu {
@@ -274,6 +275,10 @@ input[type="checkbox"]:after,
     border-left: 1px solid #FFFFFF;
 }
 
+.card-distance.card-unvoted {
+    border-left: 1px solid #DB4437;
+}
+
 .card-distance-top {
     top: 10px;
     position: relative;
@@ -282,4 +287,46 @@ input[type="checkbox"]:after,
 .card-distance-bottom {
     bottom: 10px;
     position: relative;
+}
+
+.fab-button {
+    position: absolute;
+    top: -30px;
+    right: 50px;
+}
+
+.fab-close-button {
+    position: absolute;
+    top: -20px;
+    right: 5px;
+}
+
+.btn-fab {
+    border-radius: 50%;
+    font-size: 36px;
+    box-shadow: 0 0 4px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.28);
+    width: 54px;
+    height: 54px;
+}
+
+.btn-close-fab {
+    border-radius: 50%;
+    font-size: 24px;
+    box-shadow: 0 0 4px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.28);
+    width: 40px;
+    height: 40px;
+}
+
+.btn-close-fab span {
+
+}
+
+.btn-fab.card-voted {
+    color: #FFFFFF;
+    background-color: #DB4437;
+}
+
+.btn-fab span {
+    top: 4px;
+    right: 1px;
 }
