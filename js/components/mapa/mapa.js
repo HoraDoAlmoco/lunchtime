@@ -91,7 +91,9 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
 
         $scope.markerClicado = function(marker) {
             $scope.markerSelecionado = marker;
-            $scope.$apply();
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
         };
 
         google.maps.event.addListener($scope.map, 'click', function (e) {
@@ -99,7 +101,9 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             $(mapCard).removeClass("open-com-menu");
             $(mapCard).removeClass("open-sem-menu");
             $rootScope.openCloseCardClass = "";
-            $scope.$apply();
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
         });
 
         $scope.initMarkers = function(){

@@ -66,6 +66,9 @@ lunchtime
                     $(mapCard).removeClass("open-sem-menu");
                     $rootScope.openCloseCardClass = "";
                 };
+                $scope.btnVotoTP = function(marker) {
+                    return marker.votado ? "Retirar Voto" : "Votar";
+                };
             }]
         }
     })
@@ -77,10 +80,9 @@ lunchtime
                 $scope.classCard = function(marker) {
                     return marker.votado ? "card-voted" : "card-unvoted";
                 };
-                $scope.btnVotoTP = function(marker) {
-                    return marker.votado ? "Retirar Voto" : "Votar";
+                $scope.listMarkerClick = function(marker) {
+                    google.maps.event.trigger(marker, 'click');
                 };
-
             }]
         }
     });

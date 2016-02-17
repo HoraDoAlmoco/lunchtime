@@ -149,7 +149,6 @@ input[type="checkbox"]:after,
     transform: translateX(-325px);
     -webkit-transition: -webkit-transform .15s ease-in-out;
     transition: transform .15s ease-in-out;
-    will-change: top,left;
     background-color: #fff;
     box-shadow: 0 0 4px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.28);
     line-height: 40px;
@@ -176,7 +175,6 @@ input[type="checkbox"]:after,
     transform: translateY(180px);
     -webkit-transition: -webkit-transform .20s ease-in-out;
     transition: transform .20s ease-in-out;
-    will-change: bottom,left;
     background-color: #fff;
     box-shadow: 0 0 4px rgba(0,0,0,.14),2px -4px 8px rgba(0,0,0,.28);
     line-height: 40px;
@@ -185,13 +183,17 @@ input[type="checkbox"]:after,
 .map-card-detail-lg.open-com-menu {
     -webkit-transform: translateX(0);
     transform: translateX(0);
-    width: auto;
+    width: calc(100% - 314px);
 }
 
 .map-card-detail-lg.open-sem-menu {
     -webkit-transform: translateX(0);
     transform: translateX(0);
     left: 0;
+}
+
+.card-detail-lg{
+    width: 100%;
 }
 
 .marker-labels {
@@ -230,6 +232,31 @@ input[type="checkbox"]:after,
     border-radius: 50%;
 }
 
+.list-card {
+    cursor: pointer;
+}
+
+.list-card.card-voted:hover {
+    background: #B71C1C;
+}
+
+.list-card.card-unvoted:hover {
+    background: #E0E0E0;
+    color: #B71C1C !important;
+}
+
+.list-card.card-unvoted:hover .card-distance {
+    color: #B71C1C !important;
+}
+
+.list-card.card-unvoted:hover .h4 {
+    color: #B71C1C !important;
+}
+
+.list-card.card-unvoted:hover .list-group-item-text {
+    color: #B71C1C !important;
+}
+
 .valor-vazio {
     color: rgba(0, 0, 0, 0.5);
     margin-left: -5px;
@@ -258,7 +285,7 @@ input[type="checkbox"]:after,
     color: #DB4437;
 }
 .card-unvoted .h4, .card-unvoted .list-group-item-text {
-    color: #DB4437 !important;
+    color: #DB4437;
 }
 
 .card-unvoted .badge {
@@ -275,8 +302,13 @@ input[type="checkbox"]:after,
     border-left: 1px solid #FFFFFF;
 }
 
+.card-distance.card-voted {
+    background: transparent;
+}
+
 .card-distance.card-unvoted {
     border-left: 1px solid #DB4437;
+    background: transparent;
 }
 
 .card-distance-top {

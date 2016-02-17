@@ -1,5 +1,6 @@
 <div ng-class="classCard(marker)"
-     class="list-group-item" ng-repeat="marker in markers | orderBy : ['-votado', '-quantidade']">
+     class="list-group-item list-card" ng-click="listMarkerClick(marker)"
+     ng-repeat="marker in markers | orderBy : ['-votado', '-quantidade']">
     <div ng-show="marker.distancia > 0" class="card-distance text-center" ng-class="classCard(marker)">
         <span class="card-distance-top">{{marker.distancia}}</span>
         <br />
