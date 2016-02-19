@@ -147,8 +147,8 @@ input[type="checkbox"]:after,
     z-index: 4;
     -webkit-transform: translateX(-325px);
     transform: translateX(-325px);
-    -webkit-transition: -webkit-transform .15s ease-in-out;
-    transition: transform .15s ease-in-out;
+    -webkit-transition: -webkit-transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
     background-color: #fff;
     box-shadow: 0 0 4px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.28);
     line-height: 40px;
@@ -160,7 +160,7 @@ input[type="checkbox"]:after,
 }
 
 .map-canvas.open-com-menu  {
-    margin-left: 315px;
+
 }
 
 .map-card-detail-lg {
@@ -173,8 +173,12 @@ input[type="checkbox"]:after,
     z-index: 3;
     -webkit-transform: translateY(180px);
     transform: translateY(180px);
-    -webkit-transition: -webkit-transform .20s ease-in-out;
-    transition: transform .20s ease-in-out;
+    -webkit-transition: -webkit-transform .35s cubic-bezier(0.4, 0, 0.2, 1),
+    width .35s cubic-bezier(0.4, 0, 0.2, 1),
+    height .35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform .35s cubic-bezier(0.4, 0, 0.2, 1),
+    width .35s cubic-bezier(0.4, 0, 0.2, 1),
+    height .35s cubic-bezier(0.4, 0, 0.2, 1);
     background-color: #fff;
     box-shadow: 0 0 4px rgba(0,0,0,.14),2px -4px 8px rgba(0,0,0,.28);
     line-height: 40px;
