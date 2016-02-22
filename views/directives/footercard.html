@@ -14,7 +14,8 @@
         </div>
     </div>
     <div class="fab-button">
-        <button class="btn-default btn-fab" ng-class="classCard(markerSelecionado)" tooltip="{{btnVotoTP(markerSelecionado)}}">
+        <button class="btn-default btn-fab" ng-click="votar(markerSelecionado)"
+                ng-class="classCard(markerSelecionado)" tooltip="{{btnVotoTP(markerSelecionado)}}">
             <span class="glyphicon glyphicon-map-marker"></span>
         </button>
     </div>

@@ -131,6 +131,25 @@ input[type="checkbox"]:after,
 
 .globe-locais {
     color: #FFFFFF;
+    cursor: pointer;
+}
+
+.globe-locais:hover {
+    color: #EF9A9A;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navbar-brand:hover.globe-locais {
+    color: #EF9A9A;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navbar-brand:hover {
+    color: #EF9A9A !important;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .navbar-default .navbar-toggle .icon-bar {

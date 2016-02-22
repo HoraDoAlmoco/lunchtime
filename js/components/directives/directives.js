@@ -69,6 +69,7 @@ lunchtime
                 $scope.btnVotoTP = function(marker) {
                     return marker.votado ? "Retirar Voto" : "Votar";
                 };
+
             }]
         }
     })

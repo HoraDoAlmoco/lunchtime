@@ -84,6 +84,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             for(var b = 0;b < tamanho; b++) {
                 info.valorVazio += "$";
             }
+            info.localObj = local;
 
             return info;
 
@@ -105,6 +106,10 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                 $scope.$apply();
             }
         });
+
+        $scope.votar = function(marker) {
+            console.log(marker.localObj.votado);
+        }
 
         $scope.initMarkers = function(){
             $scope.markerSelecionado = {};
@@ -197,6 +202,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             marker.distancia = info.distancia ? info.distancia : 0;
             marker.valor = info.valor;
             marker.valorVazio = info.valorVazio;
+            marker.localObj = info.localObj;
 
             google.maps.event.addListener(marker, 'click', function(){
                 var mapCard = $(".map-card-detail-lg");
