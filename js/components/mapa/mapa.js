@@ -107,11 +107,124 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             }
         });
 
-        $scope.votar = function(marker) {
-            console.log(marker.localObj.votado);
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (var i = 0; i < $scope.markers.length; i++) {
+                $scope.markers[i].setMap(map);
+            }
         }
 
-        $scope.initMarkers = function(){
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
+        $scope.votar = function(marker) {
+            var mapCard = $(".map-card-detail-lg");
+            $(mapCard).removeClass("open-com-menu");
+            $(mapCard).removeClass("open-sem-menu");
+            $rootScope.openCloseCardClass = "";
+            $rootScope.openCloseClass = "";
+
+            waitingDialog.show();
+
+            //verificar se esse local ja possui voto do usuario atual, assim sendo uma remoção de votação.
+            var retirar = false;
+            var indiceRetirar = 0;
+            var indiceGrupo = 0;
+            //if(local.grupos[a] === grupoPrincipal._id.$oid) {
+
+            for(var i = 0;i < marker.localObj.grupos.length; i++){
+                //grupo correto
+                if(marker.localObj.grupos[i].grupo === $stateParams.grupo){
+                    indiceGrupo = i;
+                    for(var j = 0;j < marker.localObj.grupos[i].votos.length; j++) {
+                        if (marker.localObj.grupos[i].votos[j] === $rootScope.currentUser._id.$oid) {
+                            retirar = true;
+                            indiceRetirar = j;
+                        }
+                    }
+                }
+            }
+            if(retirar) {
+                //retirar voto
+                marker.localObj.grupos[indiceGrupo].votos.splice(indiceRetirar, 1);
+                marker.localObj.$saveOrUpdate().then(function(){
+                    $scope.initMarkers();
+                });
+            } else {
+                //votar
+                //procurar se tem local votado em outro lugar
+                var query = {
+                    "grupos" : {
+                        $elemMatch : {
+                            "grupo" : grupoPrincipal._id.$oid,
+                            "votos" : {
+                                $eq : $rootScope.currentUser._id.$oid
+                            }
+                        }
+                    }
+                };
+                Locais.query(query).then(function(locais){
+                    //verificar se achou
+                    if(locais.length > 0) {
+                        var local = locais[0];
+                        //ver se por um acaso nao estou tirando do proprio que ja coloquei.
+                        if(local._id.$oid === marker.localObj._id.$oid) {
+                            //se é o mesmo que marcou, refaz a lista
+                            $scope.initMarkers();
+                        } else {
+                            //retiro o voto primeiro
+                            for(var a = 0; a < local.grupos.length; a++) {
+                                if(local.grupos[a].grupo === grupoPrincipal._id.$oid) {
+                                    //é o grupo
+                                    var retirarVoto = false;
+                                    var indiceVoto = 0;
+                                    for(var b = 0;b < local.grupos[a].votos.length;b++) {
+                                        if($rootScope.currentUser._id.$oid === local.grupos[a].votos[b]) {
+                                            retirarVoto = true;
+                                            indiceVoto = b;
+                                        }
+                                    }
+                                    if(retirarVoto) {
+                                        local.grupos[a].votos.splice(indiceVoto, 1);
+                                    }
+                                }
+                            }
+                            local.$saveOrUpdate().then(function(){
+                                marker.localObj.grupos[indiceGrupo].votos.push($rootScope.currentUser._id.$oid);
+                                marker.localObj.$saveOrUpdate().then(function(){
+                                    $scope.initMarkers();
+                                });
+                            });
+                        }
+                    } else {
+                        //nao tem, esta correto
+                        marker.localObj.grupos[indiceGrupo].votos.push($rootScope.currentUser._id.$oid);
+                        marker.localObj.$saveOrUpdate().then(function(){
+                            $scope.initMarkers();
+                        });
+                    }
+                });
+            }
+        };
+
+        $scope.initMarkers = function(foraDaPagina){
+
+            if(!foraDaPagina) {
+                waitingDialog.show();
+                if(navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var lat = position.coords.latitude;
+                        var lon = position.coords.longitude;
+                        var userLocation = new google.maps.LatLng(lat, lon);
+                        var marker = new google.maps.Marker({
+                            position: userLocation,
+                            map: $scope.map,
+                            icon: "img/core/pegman.png"
+                        });
+                    });
+                }
+            }
             $scope.markerSelecionado = {};
             var query = {
                 "grupos" : {
@@ -120,6 +233,8 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                     }
                 }
             };
+            clearMarkers();
+            $scope.markers = [];
             Locais.query(query).then(function(locais){
                 var groupLatLng = new google.maps.LatLng(grupoPrincipal.latitude, grupoPrincipal.longitude);
                 locais.forEach(function(local){
@@ -149,6 +264,10 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                     }
                 });
             });
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
+            waitingDialog.hide();
         };
 
         var recuperaLocalGrupo = function(idGrupoPrincipal, grupos) {
