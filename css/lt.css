@@ -124,6 +124,79 @@ input[type="checkbox"]:after,
     text-align: center;
 }
 
+.core-searchlist {
+    padding-top: 64px;
+    position: absolute;
+    z-index: 21;
+    width: 100%;
+}
+
+.searchlist {
+    margin: 0 72px;
+    -webkit-animation: all .15s cubic-bezier(.4,0,.2,1);
+    animation: all .15s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+}
+
+.searchlist ul {
+    list-style: none;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-color: #FFF;
+}
+
+.searchlist ul li {
+    cursor: pointer;
+    line-height: 36px;
+    overflow: hidden;
+    padding: 0 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.searchlist ul li:hover {
+    background-color: rgba(0,0,0,.05);
+}
+
+.searchlistimg {
+    vertical-align: middle;
+    margin-right: 24px;
+    margin-top: 6px;
+    float: left;
+    background-size: 24px;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-drag: none;
+    background-color: #db4437;
+    border-radius: 50%;
+}
+
+.searchlisttitle{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 4px;
+}
+
+.searchlistendereco {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #999;
+    font-size: 14px;
+}
+
+.disable {
+    display: none;
+}
+
+.enable {
+    display: block;
+}
+
 #map-canvas {
     width: auto;
     height: auto;
@@ -202,8 +275,8 @@ input[type="checkbox"]:after,
     position: fixed;
     width: 100%;
     z-index: 3;
-    -webkit-transform: translateY(180px);
-    transform: translateY(180px);
+    -webkit-transform: translateY(220px);
+    transform: translateY(220px);
     -webkit-transition: -webkit-transform .35s cubic-bezier(0.4, 0, 0.2, 1),
     width .35s cubic-bezier(0.4, 0, 0.2, 1),
     height .35s cubic-bezier(0.4, 0, 0.2, 1);

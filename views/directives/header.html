@@ -1,42 +1,57 @@
-<div class="navbar navbar-default navbar-lunchtime navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar-main">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-                <span ng-click="openClose()" class="navbar-brand brand">
-                    <span class="glyphicon glyphicon-map-marker"></span>
-                    <span class="brand-title">
-                        <span class="font-med">L</span>unch<span class="font-med">T</span>ime
+<div>
+    <div class="navbar navbar-default navbar-lunchtime navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse" data-target="#navbar-main">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                    <span ng-click="openClose()" class="navbar-brand brand">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        <span class="brand-title">
+                            <span class="font-med">L</span>unch<span class="font-med">T</span>ime
+                        </span>
                     </span>
-                </span>
-        </div>
+            </div>
 
-        <div class="collapse navbar-collapse" id="navbar-main">
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group form-group-input">
-                    <input type="text" id="inputSearch" class="form-control" placeholder="Buscar local">
-                </div>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a ui-sref="mapa">
-                        <span class="glyphicon glyphicon-user" tooltip="Meus dados"></span>
-                    </a>
-                </li>
-                <li>
-                    <a ui-sref="mapa">
-                        <span class="glyphicon glyphicon-cog" tooltip="Meus grupos"></span>
-                    </a>
-                </li>
-                <li>
-                    <a ui-sref="home">
-                        <span class="glyphicon glyphicon-off" tooltip="Sair"></span>
-                    </a>
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group form-group-input">
+                        <input type="text" id="inputSearch"
+                               class="form-control" placeholder="Buscar local"
+                               ng-model="searchtext.titulo" ng-change="changeSearch()">
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a ui-sref="mapa">
+                            <span class="glyphicon glyphicon-user" tooltip="Meus dados"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="mapa">
+                            <span class="glyphicon glyphicon-cog" tooltip="Meus grupos"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="home">
+                            <span class="glyphicon glyphicon-off" tooltip="Sair"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="core-searchlist">
+        <div class="searchlist" ng-class="coresearchlist">
+            <ul>
+                <li ng-repeat="marker in markers | filter:searchtext" ng-click="listMarkerClick(marker)">
+                    <div class="searchlistimg {{marker.categoria}}"></div>
+                    <span class="searchlisttitle">{{marker.titulo}}</span><span class="searchlistendereco">{{marker.endereco}}</span>
                 </li>
             </ul>
         </div>

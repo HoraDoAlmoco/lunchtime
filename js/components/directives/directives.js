@@ -35,6 +35,8 @@ lunchtime
             controller : ['$scope','$rootScope', function($scope, $rootScope){
                 $rootScope.openCloseClass = "";
                 $rootScope.openCloseMapClass = "";
+                $scope.searchtext = {"titulo" : ""};
+                $scope.coresearchlist = "disable";
                 $scope.openClose = function(){
                     var mapCard = $(".map-card-detail-lg");
                     $rootScope.openCloseClass !== "open" ? $rootScope.openCloseClass = "open" : $rootScope.openCloseClass = "";
@@ -49,6 +51,14 @@ lunchtime
                         $rootScope.openCloseCardClass = "open-sem-menu";
                     }
                 };
+
+                $scope.changeSearch = function() {
+                    if($scope.searchtext.titulo != ""){
+                        $scope.coresearchlist = "enable";
+                    } else {
+                        $scope.coresearchlist = "disable";
+                    }
+                }
             }]
         }
     })

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <meta name="description" content="">
-    <meta name="viewport" content="minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=440">
+    <meta name="viewport" content="minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
     <title>Lunch Time</title>
 
     <link rel="stylesheet" href="css/assets/normalize.css" >
@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="css/assets/bootstrap.min.css" >
     <link rel="stylesheet" href="css/lt.css" >
 
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script type="text/javascript"
+            src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA38JOKduXtkJglQDRnupkg0RzaQXvI0lg">
+    </script>
 
 </head>
 <body ng-app="lunchtime" ng-style="bodybg" class="image-cover">
@@ -28,12 +30,12 @@
             }
             div.m-app-loading div.animated-container {
                 background-color: #2196F3 ;
-                bottom: 0px ;
-                left: 0px ;
+                bottom: 0;
+                left: 0;
                 opacity: 1.0 ;
                 position: fixed ;
-                right: 0px ;
-                top: 0px ;
+                right: 0;
+                top: 0;
                 z-index: 999999 ;
             }
             /* Used to initialize the ng-leave animation state. */
@@ -49,22 +51,22 @@
             div.m-app-loading div.messaging {
                 color: #FFFFFF ;
                 font-family: monospace ;
-                left: 0px ;
+                left: 0 ;
                 margin-top: -37px ;
                 position: absolute ;
-                right: 0px ;
+                right: 0 ;
                 text-align: center ;
                 top: 50% ;
             }
             div.m-app-loading h1 {
                 font-size: 26px ;
                 line-height: 35px ;
-                margin: 0px 0px 20px 0px ;
+                margin: 0 0 20px 0 ;
             }
             div.m-app-loading p {
                 font-size: 18px ;
                 line-height: 14px ;
-                margin: 0px 0px 0px 0px ;
+                margin:0;
             }
         </style>
 
