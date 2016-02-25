@@ -2,8 +2,6 @@
 
 @import url(http://fonts.googleapis.com/css?family=Lobster:500,300,700,400);
 
-
-
 html, body {
     width: 100%;
     height: 100%;
@@ -81,24 +79,6 @@ input[type="checkbox"]:after,
 
 .navbar-form {
     width: 60%;
-}
-
-@media (min-width: 867px) {
-    .navbar-form {
-        width: 66%;
-    }
-}
-
-@media (min-width: 1024px) {
-    .navbar-form {
-        width: 70%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .navbar-form {
-        width: 75%;
-    }
 }
 
 #inputSearch {
@@ -416,4 +396,22 @@ input[type="checkbox"]:after,
 .btn-fab span {
     top: 4px;
     right: 1px;
+}
+
+@media (min-width: 867px) {
+    .navbar-form {
+        width: 66%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .navbar-form {
+        width: 70%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .navbar-form {
+        width: 75%;
+    }
 }
