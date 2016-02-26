@@ -126,15 +126,13 @@ input[type="checkbox"]:after,
 
 .core-searchlist {
     padding-top: 64px;
-    position: absolute;
+    position: relative;
     z-index: 21;
     width: 100%;
 }
 
 .searchlist {
     margin: 0 72px;
-    -webkit-animation: all .15s cubic-bezier(.4,0,.2,1);
-    animation: all .15s cubic-bezier(.4,0,.2,1);
     box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 

@@ -343,5 +343,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             $scope.markers.push(marker);
         };
 
-
+        $scope.addtogroup = function(){
+            console.log(this);
+        };
     }]);

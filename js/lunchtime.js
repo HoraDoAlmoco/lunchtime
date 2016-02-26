@@ -41,3 +41,34 @@ var lunchtime = angular.module('lunchtime', [
                 }
             });
     });
+
+function fixInfoWindow(){
+    var set = google.maps.InfoWindow.prototype.set;
+    google.maps.InfoWindow.prototype.set = function (key, val) {
+        var self = this;
+        if(key === "map") {
+            if (!this.anchor) {
+                console.log(this.getPosition());
+                console.log(this.getContent());
+                console.log(this.content);
+                var link = angular.element("<button class='btn btn-danger map-add-group' set-on-click onclick='outaddtogroup()'>Adicionar ao grupo</button>");
+                var divlist = angular.element(this.content).find("div");
+                var gmrev;
+                for(var i = 0; i < divlist.length; i++) {
+                    if(angular.element(divlist[i]).hasClass("view-link")) {
+                        gmrev = divlist[i];
+                        break;
+                    }
+                }
+                angular.element(gmrev).html("");
+                angular.element(gmrev).removeAttr("jsaction");
+                angular.element(gmrev).append(angular.element("<div></div>").append(link));
+            }
+        }
+        set.apply(this, arguments);
+    }
+}
+
+function outaddtogroup(){
+    angular.element(document.getElementById('lunchTimeApp')).scope().addtogroup();
+}
