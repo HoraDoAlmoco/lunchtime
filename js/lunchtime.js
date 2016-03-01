@@ -1,4 +1,5 @@
-
+var service;
+var resultadoBusca={};
 var lunchtime = angular.module('lunchtime', [
     'ui.router','ngResource', 'mongolabResourceHttp',
     'ngCookies', 'ngAnimate', 'ui.bootstrap'
@@ -39,6 +40,43 @@ var lunchtime = angular.module('lunchtime', [
                 data : {
                     requiredlogin : true
                 }
+            })
+            .state('addlocal', {
+                url: "/addlocal",
+                data : {
+                    requiredlogin : true
+                },
+                onEnter: ['$stateParams', '$state', '$modal',
+                    function($stateParams, $state, $modal) {
+                        $modal
+                            // handle modal open
+                            .open({
+                                templateUrl: "views/modal/local.html",
+                                controller: ['$scope',
+                                    function($scope) {
+                                        // handle after clicking Cancel button
+                                        $scope.cancel = function() {
+                                            $scope.$dismiss();
+                                        };
+                                        // close modal after clicking OK button
+                                        $scope.ok = function() {
+                                            $scope.$close(true);
+                                        };
+                                    }
+                                ]
+                            })
+
+                            // change route after modal result
+                            .result.then(function() {
+                                // change route after clicking OK button
+                                $state.transitionTo('mapa');
+                            }, function() {
+                                // change route after clicking Cancel button or clicking background
+                                $state.transitionTo('mapa');
+                            });
+
+                    }
+                ]
             });
     });
 
@@ -48,11 +86,17 @@ function fixInfoWindow(){
         var self = this;
         if(key === "map") {
             if (!this.anchor) {
-                console.log(this.getPosition());
-                console.log(this.getContent());
-                console.log(this.content);
-                var link = angular.element("<button class='btn btn-danger map-add-group' set-on-click onclick='outaddtogroup()'>Adicionar ao grupo</button>");
+                var lat = self.getPosition().lat();
+                var lng = self.getPosition().lng();
+
                 var divlist = angular.element(this.content).find("div");
+                var title = "";
+                for(var j = 0; j < divlist.length; j++) {
+                    if(angular.element(divlist[j]).hasClass("title")) {
+                        title = angular.element(divlist[j]).html();
+                        break;
+                    }
+                }
                 var gmrev;
                 for(var i = 0; i < divlist.length; i++) {
                     if(angular.element(divlist[i]).hasClass("view-link")) {
@@ -60,15 +104,27 @@ function fixInfoWindow(){
                         break;
                     }
                 }
-                angular.element(gmrev).html("");
-                angular.element(gmrev).removeAttr("jsaction");
-                angular.element(gmrev).append(angular.element("<div></div>").append(link));
+
+                var request = {
+                    "location" : new google.maps.LatLng(lat,lng),
+                    "radius" : '50',
+                    "name" : title
+                };
+
+                service.nearbySearch(request, function(results, status){
+                    resultadoBusca = results;
+                    var link = angular.element("<button class='btn btn-danger map-add-group' set-on-click onclick='outaddtogroup(\"" + title + "\")'>Adicionar ao grupo</button>");
+                    angular.element(gmrev).html("");
+                    angular.element(gmrev).removeAttr("jsaction");
+                    angular.element(gmrev).append(angular.element("<div></div>").append(link));
+                });
+
             }
         }
         set.apply(this, arguments);
     }
 }
 
-function outaddtogroup(){
-    angular.element(document.getElementById('lunchTimeApp')).scope().addtogroup();
+function outaddtogroup(nome){
+    angular.element(document.getElementById('lunchTimeApp')).scope().addtogroup(nome);
 }

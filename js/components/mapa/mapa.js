@@ -38,6 +38,8 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
         $scope.map.mapTypes.set('lunchtimemap', lunchtimeMapType);
         $scope.map.setMapTypeId('lunchtimemap');
 
+        service = new google.maps.places.PlacesService($scope.map);
+
         var primarker = new MarkerWithLabel({
             map: $scope.map,
             position: new google.maps.LatLng(grupoPrincipal.latitude, grupoPrincipal.longitude),
@@ -343,7 +345,10 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             $scope.markers.push(marker);
         };
 
-        $scope.addtogroup = function(){
-            console.log(this);
+        $scope.addtogroup = function(nome){
+            console.log(nome);
+            if(resultadoBusca[0]) {
+                console.log(resultadoBusca[0].name);
+            }
         };
     }]);
