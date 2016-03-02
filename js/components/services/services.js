@@ -63,6 +63,32 @@ lunchtime
                         {visibility: 'off'}
                     ]
                 }
+            ],
+            tiposLocais : [
+                {id : "selfservice", label : "Self-Service"},
+                {id : "gourmet", label : "Gourmet"},
+                {id : "alacarte", label : "À la carte"},
+                {id : "pizzaria", label : "Pizzaria"},
+                {id : "steak", label : "Steak House"},
+                {id : "vegetarian", label : "Vegetariana"},
+                {id : "bbq", label : "BBQ"},
+                {id : "asiatica", label : "Asiatica"},
+                {id : "cafemanha", label : "Cafe da Manhã"},
+                {id : "cervejaria", label : "Cervejaria"},
+                {id : "padaria", label : "Padaria"},
+                {id : "hamburgueria", label : "Hamburgueria"},
+                {id : "cafeteria", label : "Cafeteria"},
+                {id : "fastfood", label : "Fast-Food"},
+                {id : "frances", label : "Francesa"},
+                {id : "frangofrito", label : "Frango Frito"},
+                {id : "comida-buteco", label : "Comida de Buteco"},
+                {id : "italiana", label : "Italiana"},
+                {id : "japonesa", label : "Japonesa"},
+                {id : "mexicana", label : "Mexicana"},
+                {id : "pub", label : "Pub"},
+                {id : "rua", label : "Comida de Rua"},
+                {id : "sushi", label : "Sushi"},
+                {id : "enoteca", label : "Enoteca"}
             ]
         };
     }]);

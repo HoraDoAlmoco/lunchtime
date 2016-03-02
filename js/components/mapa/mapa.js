@@ -5,6 +5,9 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
         $rootScope.bodybg = {
             background: '#db4437'
         };
+        $scope.local = {
+            "nome": ""
+        };
         $scope.openCloseCardClass = "";
 
         function capitalizeFirstLetter(string) {
@@ -350,4 +353,5 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                 $state.transitionTo('addlocal', {grupo:$stateParams.grupo});
             }
         };
+
     }]);

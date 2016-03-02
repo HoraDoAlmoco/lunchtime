@@ -52,20 +52,8 @@ var lunchtime = angular.module('lunchtime', [
                             // handle modal open
                             .open({
                                 templateUrl: "views/modal/local.html",
-                                controller: ['$scope',
-                                    function($scope) {
-                                        // handle after clicking Cancel button
-                                        $scope.cancel = function() {
-                                            $scope.$dismiss();
-                                        };
-                                        // close modal after clicking OK button
-                                        $scope.ok = function() {
-                                            $scope.$close(true);
-                                        };
-                                    }
-                                ]
+                                controller: "LocalController"
                             })
-
                             // change route after modal result
                             .result.then(function() {
                                 // change route after clicking OK button
@@ -74,7 +62,6 @@ var lunchtime = angular.module('lunchtime', [
                                 // change route after clicking Cancel button or clicking background
                                 $state.transitionTo('mapa', {grupo:$stateParams.grupo});
                             });
-
                     }
                 ]
             });
