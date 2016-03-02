@@ -14,6 +14,16 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
+        function recuperaLabelCategoria(categoria) {
+            var label = "";
+            for(var i = 0; i < Listas.tiposLocais.length; i++) {
+                if(Listas.tiposLocais[i].id === categoria) {
+                    label = Listas.tiposLocais[i].label;
+                }
+            }
+            return label
+        }
+
         //pequeno teste para verificar se é o mesmo que esta no cookie.
         //enconomizo tempo e busca
         var grupoPrincipal = $cookies.getObject("ltgrupoPrincipal");
@@ -78,7 +88,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             }
             var infos = localGrupo.infos;
             info.infos = infos;
-            info.extra = capitalizeFirstLetter(localGrupo.categoria);
+            info.extra = recuperaLabelCategoria(localGrupo.categoria);
             info.categoria = localGrupo.categoria;
             for (var j = 0; j < infos.length; j++){
                 info.extra += ", " + infos[j];
@@ -240,6 +250,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             };
             clearMarkers();
             $scope.markers = [];
+            $scope.bounds = new google.maps.LatLngBounds();
             Locais.query(query).then(function(locais){
                 var groupLatLng = new google.maps.LatLng(grupoPrincipal.latitude, grupoPrincipal.longitude);
                 locais.forEach(function(local){
@@ -258,7 +269,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                                 travelMode: google.maps.TravelMode.WALKING,
                                 unitSystem: google.maps.UnitSystem.METRIC,
                                 avoidHighways: false,
-                                avoidTolls: false,
+                                avoidTolls: false
                             }, function (response, status) {
                                 info = criarInfoObj(localGrupo, local, response.rows[0].elements[0].distance.value);
                                 createMarker(info);
@@ -268,6 +279,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                         createMarker(info);
                     }
                 });
+                $scope.map.fitBounds($scope.bounds);
             });
             if(!$scope.$$phase) {
                 $scope.$apply();
@@ -346,6 +358,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             });
 
             $scope.markers.push(marker);
+            $scope.bounds.extend(marker.position);
         };
 
         $scope.addtogroup = function(nome){

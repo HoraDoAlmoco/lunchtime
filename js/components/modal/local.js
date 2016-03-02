@@ -34,6 +34,45 @@ lunchtime.controller('LocalController', ['$scope', '$rootScope', '$state', '$sta
         };
         // close modal after clicking OK button
         $scope.salvarLocal = function() {
-            $scope.$close(true);
+
+            var query = {
+                "place_id" : $scope.local.place_id
+            };
+
+            //verificar o local ja existe na base em outro grupo.
+            var objGrupo = {
+                "grupo": $stateParams.grupo,
+                "titulo": $scope.local.titulo,
+                "categoria": $scope.local.categoria.id,
+                "valor": recuperaValor($scope.local.valor),
+                "infos": $scope.local.infos,
+                "votos": []
+            }
+
+            Locais.query(query).then(function(locais){
+                if(locais[0]) {
+                    //trouxe algum valor
+                    locais[0].grupos.push(objGrupo);
+                    locais[0].$saveOrUpdate().then(function(){
+                        $scope.$close(true);
+                    });
+                } else {
+                    //novo local
+                    var novoLocal = new Locais();
+                    novoLocal.latitude = $scope.local.latitude;
+                    novoLocal.longitude = $scope.local.longitude;
+                    novoLocal.place_id = $scope.local.place_id;
+                    novoLocal.endereco = $scope.local.endereco;
+                    novoLocal.grupos = [objGrupo];
+                    novoLocal.$saveOrUpdate().then(function (){
+                        $scope.$close(true);
+                    });
+                }
+            });
         };
+
+        function recuperaValor(valor) {
+            var split = valor.split("-");
+            return split[0].trim();
+        }
     }]);
