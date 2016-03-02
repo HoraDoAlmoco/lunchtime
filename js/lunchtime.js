@@ -42,7 +42,7 @@ var lunchtime = angular.module('lunchtime', [
                 }
             })
             .state('addlocal', {
-                url: "/addlocal",
+                url: "/addlocal/:grupo",
                 data : {
                     requiredlogin : true
                 },
@@ -69,10 +69,10 @@ var lunchtime = angular.module('lunchtime', [
                             // change route after modal result
                             .result.then(function() {
                                 // change route after clicking OK button
-                                $state.transitionTo('mapa');
+                                $state.transitionTo('mapa', {grupo:$stateParams.grupo});
                             }, function() {
                                 // change route after clicking Cancel button or clicking background
-                                $state.transitionTo('mapa');
+                                $state.transitionTo('mapa', {grupo:$stateParams.grupo});
                             });
 
                     }

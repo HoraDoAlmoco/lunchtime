@@ -346,9 +346,8 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
         };
 
         $scope.addtogroup = function(nome){
-            console.log(nome);
-            if(resultadoBusca[0]) {
-                console.log(resultadoBusca[0].name);
+            if(resultadoBusca[0] && (resultadoBusca[0].name === nome)) {
+                $state.transitionTo('addlocal', {grupo:$stateParams.grupo});
             }
         };
     }]);
