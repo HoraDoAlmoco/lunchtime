@@ -32,7 +32,7 @@ lunchtime
             restrict : 'A',
             replace: true,
             templateUrl: 'views/directives/header.html',
-            controller : ['$scope','$rootScope', function($scope, $rootScope){
+            controller : ['$scope','$rootScope', '$state', function($scope, $rootScope, $state){
                 $rootScope.openCloseClass = "";
                 $rootScope.openCloseMapClass = "";
                 $scope.searchtext = {"titulo" : ""};
@@ -58,7 +58,14 @@ lunchtime
                     } else {
                         $scope.coresearchlist = "disable";
                     }
-                }
+                };
+
+                $scope.openUser = function(grupo, user){
+                    $state.transitionTo('user', {grupo:grupo, user:user});
+                };
+                $scope.openGroup = function(user){
+                    $state.transitionTo('group', {user:user});
+                };
             }]
         }
     })

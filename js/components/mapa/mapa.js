@@ -2,6 +2,10 @@
 lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
     'Usuario', 'Grupo', 'Listas', 'Locais', '$filter',
     function($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, $filter){
+
+        $scope.idgrupo = $stateParams.grupo;
+        $scope.iduser = $rootScope.currentUser._id.$oid;
+
         $rootScope.bodybg = {
             background: '#db4437'
         };
