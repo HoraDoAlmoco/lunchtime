@@ -89,6 +89,15 @@ lunchtime
                 {id : "rua", label : "Comida de Rua"},
                 {id : "sushi", label : "Sushi"},
                 {id : "enoteca", label : "Enoteca"}
-            ]
+            ],
+            recuperaLabelCategoria : function(categoria) {
+                var label = "";
+                for(var i = 0; i < this.tiposLocais.length; i++) {
+                    if(this.tiposLocais[i].id === categoria) {
+                        label = this.tiposLocais[i].label;
+                    }
+                }
+                return label
+            }
         };
     }]);

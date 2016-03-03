@@ -1,6 +1,6 @@
 <div>
     <div class="row row-card">
-        <div class="col-xs-6 divider">
+        <div class="col-xs-6">
             <h4 class="card-title">{{markerSelecionado.titulo}}</h4>
             <div class="card-marker-icon {{markerSelecionado.categoria}}"></div>
             <h5>&nbsp;{{markerSelecionado.extra}} -
@@ -8,9 +8,17 @@
                 <span class="valor-vazio">{{markerSelecionado.valorVazio}}</span>
             </h5>
         </div>
-        <div class="col-xs-6">
-            <span>{{markerSelecionado.endereco}}</span>
-            {{markerSelecionado.usuarios}}
+        <div class="col-xs-6 divider">
+            <div class="info-line">
+                <span class="glyphicon glyphicon-map-marker info-icon"></span>
+                <span class="info-text">{{markerSelecionado.endereco}}</span>
+            </div>
+            <div>
+                <div ng-repeat="usuario in markerSelecionado.usuarios">
+                    <img class="user-mini-port" ng-src="http://dummyimage.com/36/db4537/ffffff&text={{usuario.substring(0,1)}}">
+                    <span>{{usuario}}</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="fab-button">

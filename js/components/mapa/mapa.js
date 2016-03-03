@@ -1,7 +1,7 @@
 
 lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais',
-    function($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais){
+    'Usuario', 'Grupo', 'Listas', 'Locais', '$filter',
+    function($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, $filter){
         $rootScope.bodybg = {
             background: '#db4437'
         };
@@ -88,7 +88,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             }
             var infos = localGrupo.infos;
             info.infos = infos;
-            info.extra = recuperaLabelCategoria(localGrupo.categoria);
+            info.extra = Listas.recuperaLabelCategoria(localGrupo.categoria);
             info.categoria = localGrupo.categoria;
             for (var j = 0; j < infos.length; j++){
                 info.extra += ", " + infos[j];
@@ -108,17 +108,21 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
         $scope.markerClicado = function(marker) {
             $scope.markerSelecionado = marker;
             var usuarios = [];
-            //var grupo = marker.localObj.grupos
-            for(var i = 0; i < marker.localObj.votos.length; i++) {
-                Usuario.getById(marker.localObj.votos[i]).then(function(usuario){
-                    if(usuario) {
-                        usuarios.push(usuario.nome);
-                    }
-                });
-            }
-            $scope.markerSelecionado.usuarios = usuarios;
-            if(!$scope.$$phase) {
-                $scope.$apply();
+            var grupo = $filter('filter')(marker.localObj.grupos, {grupo : $stateParams.grupo}, true);
+            var grupoSelecionado = {};
+            if(grupo) {
+                grupoSelecionado = grupo[0];
+                for(var i = 0; i < grupoSelecionado.votos.length; i++) {
+                    Usuario.getById(grupoSelecionado.votos[i]).then(function(usuario){
+                        if(usuario) {
+                            usuarios.push(usuario.nome);
+                        }
+                    });
+                }
+                $scope.markerSelecionado.usuarios = usuarios;
+                if(!$scope.$$phase) {
+                    $scope.$apply();
+                }
             }
         };
 
