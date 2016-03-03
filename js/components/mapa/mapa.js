@@ -107,6 +107,16 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
 
         $scope.markerClicado = function(marker) {
             $scope.markerSelecionado = marker;
+            var usuarios = [];
+            //var grupo = marker.localObj.grupos
+            for(var i = 0; i < marker.localObj.votos.length; i++) {
+                Usuario.getById(marker.localObj.votos[i]).then(function(usuario){
+                    if(usuario) {
+                        usuarios.push(usuario.nome);
+                    }
+                });
+            }
+            $scope.markerSelecionado.usuarios = usuarios;
             if(!$scope.$$phase) {
                 $scope.$apply();
             }
