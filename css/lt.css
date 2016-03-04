@@ -9,6 +9,10 @@ html, body {
     padding: 0;
 }
 
+.text-white {
+    color: #FFFFFF !important;
+}
+
 .top-10 {
     margin-top: 10px;
 }
@@ -486,6 +490,46 @@ input[type="checkbox"]:after,
 .btn-fab span {
     top: 4px;
     right: 1px;
+}
+
+.navbar-back a {
+    color: #FFFFFF;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.navbar-back a:hover {
+    color: #bbbbbb;
+}
+
+.list-groups {
+    margin-top: 70px;
+}
+
+.list-icons {
+    font-size: 14px;
+}
+
+.list-icons>.icon-user:hover, .list-icons>.icon-save:hover, .list-icons>.icon-delete:hover{
+    color: #000000;
+    cursor: pointer;
+}
+
+.list-icons>.icon-fav:hover {
+    color: #000000;
+}
+
+.list-icons>span {
+    margin-left: 12px;
+}
+
+.list-icons>.icon-fav:hover::before {
+    content: "\e005";
+}
+
+.group-name:hover {
+    color: #000000;
+    cursor: pointer;
 }
 
 @media (min-width: 867px) {

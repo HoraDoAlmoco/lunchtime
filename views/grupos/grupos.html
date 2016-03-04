@@ -1,0 +1,43 @@
+<div ng-controller="GroupController" ng-init="initGrupos()">
+    <div class="navbar navbar-default navbar-lunchtime navbar-fixed-top">
+        <div class="container-fluid">
+
+            <div class="navbar-left">
+                <p class="navbar-text navbar-back">
+                    <a ui-sref="mapa">
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                        <span>Voltar</span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="navbar-right" id="navbar-main">
+                <p class="nav navbar-nav navbar-text text-white">
+                    Meus grupos
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-groups">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="grupo in grupos">
+                        <span class="list-group-item-heading h4 group-name">{{grupo.nome}}</span>
+                        <span class="pull-right list-icons">
+                            <span class="glyphicon glyphicon-user icon-user" tooltip="Convidar pessoa"></span>
+                            <span class="glyphicon glyphicon-ok icon-save" tooltip="Salvar grupo"></span>
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <span class="glyphicon glyphicon-heart-empty icon-fav" tooltip="Tornar principal"></span>
+                            <span class="glyphicon glyphicon-trash icon-delete" tooltip="Excluir grupo"></span>
+                        </span>
+                        <div class="group-detail">
+                            {{grupo.latitude}},{{grupo.longitude}} - {{grupo._id.$oid}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

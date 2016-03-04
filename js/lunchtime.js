@@ -94,6 +94,9 @@ var lunchtime = angular.module('lunchtime', [
                 data : {
                     requiredlogin : true
                 },
+                templateUrl: "views/grupos/grupos.html",
+                controller: "GroupController"
+                /*
                 onEnter: ['$stateParams', '$state', '$modal',
                     function($stateParams, $state, $modal) {
                         $modal
@@ -112,6 +115,7 @@ var lunchtime = angular.module('lunchtime', [
                             });
                     }
                 ]
+                */
             });
     });
 
