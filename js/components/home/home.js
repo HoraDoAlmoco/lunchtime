@@ -1,4 +1,4 @@
-lunchtime.controller('HomeController', ['$scope', '$rootScope', '$state', '$cookies',
+angular.module('lunchtime').controller('HomeController', ['$scope', '$rootScope', '$state', '$cookies',
     'Usuario', 'Grupo',
     function($scope, $rootScope, $state, $cookies, Usuario, Grupo){
         $rootScope.bodybg = {

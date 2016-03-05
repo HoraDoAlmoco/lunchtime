@@ -1,5 +1,4 @@
-
-lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
+angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
     'Usuario', 'Grupo', 'Listas', 'Locais', '$filter',
     function($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, $filter){
 

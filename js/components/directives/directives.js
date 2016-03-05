@@ -1,5 +1,5 @@
 
-lunchtime
+angular.module('lunchtime')
     .directive(
         "mAppLoading",
         function( $animate ) {
