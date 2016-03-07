@@ -298,7 +298,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                         createMarker(info);
                     }
                 });
-                $scope.map.fitBounds($scope.bounds);
+                //$scope.map.fitBounds($scope.bounds);
             });
             if(!$scope.$$phase) {
                 $scope.$apply();
@@ -332,7 +332,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             if(info.votos && Number(info.votos.length) > 0){
                 icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-sprite.png", new google.maps.Size(33, 42), new google.maps.Point(eixox, eixoy));
             } else {
-                icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-blank.png", new google.maps.Size(33, 42));
+                icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-blank-red.png", new google.maps.Size(33, 42));
             }
 
             var xPoint = Math.ceil(info.titulo.length * 3);
