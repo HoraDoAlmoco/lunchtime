@@ -67,7 +67,7 @@ angular.module('lunchtime').config(function ($stateProvider, $urlRouterProvider)
             ]
         })
         .state('group', {
-            url: "/grupos/:user",
+            url: "/grupos/:user/:grupo",
             data: {
                 requiredlogin: true
             },

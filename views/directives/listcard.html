@@ -3,11 +3,12 @@
      ng-repeat="marker in markers | orderBy : ['-votado', '-quantidade']">
     <div ng-show="marker.distancia > 0" class="card-distance text-center" ng-class="classCard(marker)">
         <span class="card-distance-top">{{marker.distancia}}</span>
-        <br />
+        <br/>
         <span class="card-distance-bottom">m.</span>
     </div>
     <h4 class="h4 list-group-item-heading">{{marker.titulo}}</h4>
     <span class="badge">{{marker.quantidade}}</span>
+
     <p class="list-group-item-text">
         <span>{{marker.endereco}}</span>
         <span>{{marker.extra}} - {{marker.valor}}

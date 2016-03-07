@@ -54,7 +54,9 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
         $scope.map.mapTypes.set('lunchtimemap', lunchtimeMapType);
         $scope.map.setMapTypeId('lunchtimemap');
 
-        service = new google.maps.places.PlacesService($scope.map);
+        if(!service) {
+            service = new google.maps.places.PlacesService($scope.map);
+        }
 
         var primarker = new MarkerWithLabel({
             map: $scope.map,

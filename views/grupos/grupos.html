@@ -4,7 +4,7 @@
 
             <div class="navbar-left">
                 <p class="navbar-text navbar-back">
-                    <a ui-sref="mapa">
+                    <a ui-sref="mapa({grupo:idgrupo})">
                         <span class="glyphicon glyphicon-menu-left"></span>
                         <span>Voltar</span>
                     </a>
@@ -23,17 +23,52 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="list-group">
-                    <div class="list-group-item" ng-repeat="grupo in grupos">
-                        <span class="list-group-item-heading h4 group-name">{{grupo.nome}}</span>
+                    <div class="list-group-item lt-group-list" ng-class="{'selected-group':$index === selectedrow}"
+                         ng-repeat="grupo in grupos">
+                        <span class="list-group-item-heading h4 group-name" ng-click="setselectedrow($index, grupo)">{{grupo.nome}}</span>
                         <span class="pull-right list-icons">
                             <span class="glyphicon glyphicon-user icon-user" tooltip="Convidar pessoa"></span>
-                            <span class="glyphicon glyphicon-ok icon-save" tooltip="Salvar grupo"></span>
-                            <span class="glyphicon glyphicon-heart"></span>
-                            <span class="glyphicon glyphicon-heart-empty icon-fav" tooltip="Tornar principal"></span>
-                            <span class="glyphicon glyphicon-trash icon-delete" tooltip="Excluir grupo"></span>
+                            <span class="glyphicon glyphicon-ok icon-save"
+                                  ng-show="grupo.criador === iduser && $index === selectedrow"
+                                  tooltip="Salvar grupo"></span>
+                            <span class="glyphicon glyphicon-heart" ng-show="grupo._id.$oid === grupoPrincipal"
+                                  tooltip="Grupo principal"></span>
+                            <span class="glyphicon glyphicon-heart-empty icon-fav"
+                                  ng-show="grupo._id.$oid !== grupoPrincipal" tooltip="Tornar principal"></span>
+                            <span class="glyphicon glyphicon-trash icon-delete" ng-show="grupo.criador === iduser"
+                                  tooltip="Excluir grupo"></span>
                         </span>
-                        <div class="group-detail">
-                            {{grupo.latitude}},{{grupo.longitude}} - {{grupo._id.$oid}}
+
+                        <div class="group-detail" ng-class="{'detail-group-show':$index === selectedrow}">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <input id="nome" ng-readonly="grupo.criador !== iduser" class="form-control"
+                                           type="text" ng-model="grupo.nome" placeholder="Nome do Grupo">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div class="group-map-detail" id="map-canvas-{{$index}}"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <input ng-readonly="grupo.criador !== iduser" id="endereco{{$index}}"
+                                           class="form-control" type="text" ng-model="grupo.endereco"
+                                           placeholder="Endereço">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <span>Latitude: {{grupo.latitude}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <span>Longitude: {{grupo.longitude}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

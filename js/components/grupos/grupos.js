@@ -5,26 +5,79 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
             background: '#FFFFFF'
         };
 
-        $scope.iduser = $stateParams.user;
+        $scope.maps = [];
 
-        $scope.initGrupos = function(){
+        $scope.iduser = $stateParams.user;
+        $scope.idgrupo = $stateParams.grupo;
+
+        $scope.selectedgroup = "";
+        $scope.selectedrow = null;
+        $scope.detailgroup = "detail-group-hidden";
+
+        $scope.setselectedrow = function (index, grupo) {
+            $scope.selectedrow = index;
+            createMap(index, grupo);
+        };
+
+        function createMap(index, grupo) {
+
+            var mapOptions = {
+                center: new google.maps.LatLng(grupo.latitude, grupo.longitude),
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControl: false,
+                streetViewControl: false,
+                disableDefaultUI: true
+            };
+            $scope.maps[index] = new google.maps.Map(document.getElementById('map-canvas-' + index), mapOptions);
+
+            var primarker = new MarkerWithLabel({
+                map: $scope.maps[index],
+                position: new google.maps.LatLng(grupo.latitude, grupo.longitude),
+                labelContent: grupo.nome,
+                labelClass: "marker-labels",
+                animation: google.maps.Animation.DROP,
+                labelAnchor: new google.maps.Point((grupo.nome.length * 3), 0)
+            });
+
+            var input = document.getElementById('endereco' + index);
+            var searchBox = new google.maps.places.SearchBox(input);
+
+            google.maps.event.addListener(searchBox, 'places_changed', function () {
+                var places = searchBox.getPlaces();
+                var bounds = new google.maps.LatLngBounds();
+                var place = places[0];
+                primarker.setMap(null);
+                primarker.position = place.geometry.location;
+                primarker.setMap($scope.maps[index]);
+                $scope.maps[index].setCenter(primarker.getPosition());
+
+                $scope.grupos[index].latitude = place.geometry.location.lat();
+                $scope.grupos[index].longitude = place.geometry.location.lng();
+
+            });
+
+        }
+
+        $scope.initGrupos = function () {
             waitingDialog.show();
-            Usuario.getById($stateParams.user).then(function(usuario){
+            Usuario.getById($stateParams.user).then(function (usuario) {
 
                 var qin = [];
                 angular.forEach(usuario.grupos, function (id) {
                     qin.push({$oid: id});
                 });
 
-                var query = {"_id" : {$in: qin}};
+                var query = {"_id": {$in: qin}};
 
-                Grupo.query(query).then(function(grupos){
+                Grupo.query(query).then(function (grupos) {
                     $scope.grupos = grupos;
+                    $scope.grupoPrincipal = usuario.grupoPrincipal;
                     /*
-                    angular.forEach($scope.grupos, function(grupo){
+                     angular.forEach($scope.grupos, function(grupo){
 
-                    });
-                    */
+                     });
+                     */
                     waitingDialog.hide();
                 })
             });
