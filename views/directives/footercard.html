@@ -2,6 +2,7 @@
     <div class="row row-card">
         <div class="col-xs-6">
             <h4 class="card-title">{{markerSelecionado.titulo}}</h4>
+
             <div class="card-marker-icon {{markerSelecionado.categoria}}"></div>
             <h5>&nbsp;{{markerSelecionado.extra}} -
                 {{markerSelecionado.valor}}
@@ -15,7 +16,8 @@
             </div>
             <div>
                 <div ng-repeat="usuario in markerSelecionado.usuarios">
-                    <img class="user-mini-port" ng-src="http://dummyimage.com/36/db4537/ffffff&text={{usuario.substring(0,1)}}">
+                    <img class="user-mini-port"
+                         ng-src="http://dummyimage.com/36/db4537/ffffff&text={{usuario.substring(0,1)}}">
                     <span>{{usuario}}</span>
                 </div>
             </div>

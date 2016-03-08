@@ -1,7 +1,10 @@
-
-lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
+angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
     'Usuario', 'Grupo', 'Listas', 'Locais', '$filter',
     function($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, $filter){
+
+        $scope.idgrupo = $stateParams.grupo;
+        $scope.iduser = $rootScope.currentUser._id.$oid;
+
         $rootScope.bodybg = {
             background: '#db4437'
         };
@@ -51,7 +54,9 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
         $scope.map.mapTypes.set('lunchtimemap', lunchtimeMapType);
         $scope.map.setMapTypeId('lunchtimemap');
 
-        service = new google.maps.places.PlacesService($scope.map);
+        if(!service) {
+            service = new google.maps.places.PlacesService($scope.map);
+        }
 
         var primarker = new MarkerWithLabel({
             map: $scope.map,
@@ -267,12 +272,11 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             $scope.bounds = new google.maps.LatLngBounds();
             Locais.query(query).then(function(locais){
                 var groupLatLng = new google.maps.LatLng(grupoPrincipal.latitude, grupoPrincipal.longitude);
+                var zIndex = google.maps.Marker.MAX_ZINDEX - (locais.length + 1) ;
                 locais.forEach(function(local){
                     var info = {};
                     var localLatLng = new google.maps.LatLng(local.latitude, local.longitude);
-
                     var localGrupo = recuperaLocalGrupo(grupoPrincipal._id.$oid, local.grupos);
-
                     var possuiVotos = localGrupo.votos && localGrupo.votos.length > 0;
                     if(possuiVotos) {
                         var service = new google.maps.DistanceMatrixService();
@@ -286,14 +290,15 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                                 avoidTolls: false
                             }, function (response, status) {
                                 info = criarInfoObj(localGrupo, local, response.rows[0].elements[0].distance.value);
-                                createMarker(info);
+                                createMarker(info, zIndex);
                             });
                     } else {
                         info = criarInfoObj(localGrupo, local);
-                        createMarker(info);
+                        createMarker(info, zIndex);
                     }
+                    zIndex++;
                 });
-                $scope.map.fitBounds($scope.bounds);
+                //$scope.map.fitBounds($scope.bounds);
             });
             if(!$scope.$$phase) {
                 $scope.$apply();
@@ -312,7 +317,7 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             return localGrupo;
         };
 
-        var createMarker = function(info) {
+        var createMarker = function(info, zIndex) {
             var eixox = 1;
             var eixoy = 136;
             if(info.votos && Number(info.votos.length) > 1){
@@ -325,9 +330,9 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
             var icon;
 
             if(info.votos && Number(info.votos.length) > 0){
-                icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-sprite.png", new google.maps.Size(33, 42), new google.maps.Point(eixox, eixoy));
+                icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-sprite-red.png", new google.maps.Size(33, 42), new google.maps.Point(eixox, eixoy));
             } else {
-                icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-blank.png", new google.maps.Size(33, 42));
+                icon = new google.maps.MarkerImage("/lunchtime/img/core/mappin-blank-red.png", new google.maps.Size(33, 42));
             }
 
             var xPoint = Math.ceil(info.titulo.length * 3);
@@ -336,9 +341,10 @@ lunchtime.controller('MapaController', ['$scope', '$rootScope', '$state', '$stat
                 position: new google.maps.LatLng(info.latitude, info.longitude),
                 icon : icon,
                 animation : google.maps.Animation.DROP,
-                labelContent: info.titulo,
+                labelContent: info.titulo.toUpperCase(),
                 labelClass: "marker-labels",
-                labelAnchor: new google.maps.Point(xPoint, 0)
+                labelAnchor: new google.maps.Point(xPoint, 0),
+                zIndex : zIndex
             });
 
             marker.titulo = info.titulo;

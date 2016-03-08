@@ -1,0 +1,52 @@
+<div class="modal-header text-center">
+    <h4 class="modal-title">Meus dados</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" ng-init="initFormUser()">
+        <fieldset>
+            <legend class="text-center">{{usuario.nome}}</legend>
+            <div class="form-group">
+                <label for="email" class="col-lg-2 control-label">E-mail</label>
+
+                <div class="col-lg-10">
+                    <input id="email" class="form-control" type="email" ng-model="usuario.email" placeholder="E-mail">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nome" class="col-lg-2 control-label">Endereço</label>
+
+                <div class="col-lg-10">
+                    <input id="nome" class="form-control" type="text" ng-model="usuario.nome" placeholder="Nome">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="apassword" class="col-lg-2 control-label">Senha atual</label>
+
+                <div class="col-lg-10">
+                    <input id="apassword" class="form-control" type="password" ng-model="apassword"
+                           placeholder="Senha atual">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="npassword" class="col-lg-2 control-label">Nova senha</label>
+
+                <div class="col-lg-10">
+                    <input id="npassword" class="form-control" type="password" ng-model="npassword"
+                           placeholder="Nova senha">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rpassword" class="col-lg-2 control-label">Repetir nova senha</label>
+
+                <div class="col-lg-10">
+                    <input id="rpassword" class="form-control" type="password" ng-model="rpassword"
+                           placeholder="Repetir nova senha">
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="salvarUser()">Salvar</button>
+    <button class="btn btn-warning" ng-click="cancelarUser()">Cancelar</button>
+</div>

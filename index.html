@@ -1,113 +1,128 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="pt-BR" ng-app="lunchtime" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="pt-BR" ng-app="lunchtime" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="pt-BR" ng-app="lunchtime" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="pt-BR" ng-app="lunchtime" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html lang="pt-BR" ng-app="lunchtime" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="pt-BR" ng-app="lunchtime" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="pt-BR" ng-app="lunchtime" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="pt-BR" ng-app="lunchtime" class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
     <meta name="description" content="">
-    <meta name="viewport" content="minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="viewport"
+          content="minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
     <title>Lunch Time</title>
 
-    <link rel="stylesheet" href="css/assets/normalize.css" >
-    <link rel="stylesheet" href="css/assets/bootstrap.css" >
-    <link rel="stylesheet" href="css/assets/bootstrap.min.css" >
-    <link rel="stylesheet" href="css/lt.css" >
+    <link rel="stylesheet" href="css/assets/normalize.css">
+    <link rel="stylesheet" href="css/assets/bootstrap.css">
+    <link rel="stylesheet" href="css/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="css/lt.css">
 
     <script type="text/javascript"
-            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA38JOKduXtkJglQDRnupkg0RzaQXvI0lg&libraries=places">
+            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA38JOKduXtkJglQDRnupkg0RzaQXvI0lg&libraries=places&language=pt-br">
     </script>
 
 </head>
 <body ng-app="lunchtime" ng-style="bodybg" class="image-cover">
 
-    <div class="m-app-loading" ng-animate-children>
-        <style type="text/css">
-            div.m-app-loading {
-                position: fixed ;
-            }
-            div.m-app-loading div.animated-container {
-                background-color: #2196F3 ;
-                bottom: 0;
-                left: 0;
-                opacity: 1.0 ;
-                position: fixed ;
-                right: 0;
-                top: 0;
-                z-index: 999999 ;
-            }
-            /* Used to initialize the ng-leave animation state. */
-            div.m-app-loading div.animated-container.ng-leave {
-                opacity: 1.0 ;
-                transition: all linear 200ms ;
-                -webkit-transition: all linear 200ms ;
-            }
-            /* Used to set the end properties of the ng-leave animation state. */
-            div.m-app-loading div.animated-container.ng-leave-active {
-                opacity: 0 ;
-            }
-            div.m-app-loading div.messaging {
-                color: #FFFFFF ;
-                font-family: monospace ;
-                left: 0 ;
-                margin-top: -37px ;
-                position: absolute ;
-                right: 0 ;
-                text-align: center ;
-                top: 50% ;
-            }
-            div.m-app-loading h1 {
-                font-size: 26px ;
-                line-height: 35px ;
-                margin: 0 0 20px 0 ;
-            }
-            div.m-app-loading p {
-                font-size: 18px ;
-                line-height: 14px ;
-                margin:0;
-            }
-        </style>
+<div class="m-app-loading" ng-animate-children>
+    <style type="text/css">
+        div.m-app-loading {
+            position: fixed;
+        }
 
-        <div class="animated-container">
-            <div class="messaging">
-                <h1>
-                    Lunchtime esta sendo carregado...
-                </h1>
-                <p>
-                    Por favor, aguarde e confie
-                </p>
-            </div>
+        div.m-app-loading div.animated-container {
+            background-color: #2196F3;
+            bottom: 0;
+            left: 0;
+            opacity: 1.0;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 999999;
+        }
+
+        /* Used to initialize the ng-leave animation state. */
+        div.m-app-loading div.animated-container.ng-leave {
+            opacity: 1.0;
+            transition: all linear 200ms;
+            -webkit-transition: all linear 200ms;
+        }
+
+        /* Used to set the end properties of the ng-leave animation state. */
+        div.m-app-loading div.animated-container.ng-leave-active {
+            opacity: 0;
+        }
+
+        div.m-app-loading div.messaging {
+            color: #FFFFFF;
+            font-family: monospace;
+            left: 0;
+            margin-top: -37px;
+            position: absolute;
+            right: 0;
+            text-align: center;
+            top: 50%;
+        }
+
+        div.m-app-loading h1 {
+            font-size: 26px;
+            line-height: 35px;
+            margin: 0 0 20px 0;
+        }
+
+        div.m-app-loading p {
+            font-size: 18px;
+            line-height: 14px;
+            margin: 0;
+        }
+    </style>
+
+    <div class="animated-container">
+        <div class="messaging">
+            <h1>
+                Lunchtime esta sendo carregado...
+            </h1>
+
+            <p>
+                Por favor, aguarde e confie
+            </p>
         </div>
     </div>
+</div>
 
-    <div ui-view class="mainsec"></div>
+<div ui-view class="mainsec"></div>
 
-    <script src="js/assets/modernizr.js"></script>
-    <script src="js/assets/angular.min.js"></script>
-    <script src="js/assets/angular-animate.min.js"></script>
-    <script src="js/assets/angular-ui-router.js"></script>
-    <script src="js/assets/angular-resource.min.js"></script>
-    <script src="js/assets/angular-cookies.min.js"></script>
-    <script src="js/assets/angular-mongolab.js"></script>
+<script src="js/assets/modernizr.js"></script>
+<script src="js/assets/angular.min.js"></script>
+<script src="js/assets/angular-animate.min.js"></script>
+<script src="js/assets/angular-ui-router.js"></script>
+<script src="js/assets/angular-resource.min.js"></script>
+<script src="js/assets/angular-cookies.min.js"></script>
+<script src="js/assets/angular-mongolab.js"></script>
 
-    <script src="js/assets/jquery.js"></script>
+<script src="js/assets/jquery.js"></script>
 
-    <script src="js/assets/bootstrap.min.js"></script>
-    <script src="js/assets/ui-bootstrap-tpls-0.13.4.min.js"></script>
+<script src="js/assets/bootstrap.min.js"></script>
+<script src="js/assets/ui-bootstrap-tpls-0.13.4.min.js"></script>
 
-    <script src="js/assets/markerwithlabel.js"></script>
+<script src="js/assets/markerwithlabel.js"></script>
 
-    <script src="js/assets/waiting-for.js"></script>
-    <script src="js/lunchtime.js"></script>
-    <script src="js/components/services/services.js"></script>
-    <script src="js/components/directives/directives.js"></script>
-    <script src="js/components/home/home.js"></script>
-    <script src="js/components/mapa/mapa.js"></script>
-    <script src="js/components/modal/local.js"></script>
-    <script type="text/javascript">
-        fixInfoWindow();
-    </script>
+<script src="js/assets/waiting-for.js"></script>
+<script src="js/lunchtime.js"></script>
+<script src="js/components/routes/routes.js"></script>
+<script src="js/components/services/services.js"></script>
+<script src="js/components/directives/directives.js"></script>
+<script src="js/components/home/home.js"></script>
+<script src="js/components/mapa/mapa.js"></script>
+<script src="js/components/modal/local.js"></script>
+<script src="js/components/modal/user.js"></script>
+<script src="js/components/grupos/grupos.js"></script>
+<script type="text/javascript">
+    fixInfoWindow();
+</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-lunchtime
+angular.module('lunchtime')
     .factory('Locais',function($mongolabResourceHttp){
     return $mongolabResourceHttp('locais');
     })

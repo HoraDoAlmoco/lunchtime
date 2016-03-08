@@ -8,6 +8,7 @@
             <!-- tem que ver se posso usar para sem titulo -->
             <div class="form-group" ng-show="local.titulo === ''">
                 <label for="titulo" class="col-lg-2 control-label">Titulo</label>
+
                 <div class="col-lg-10">
                     <input id="titulo" class="form-control" type="text" ng-model="local.titulo" placeholder="Titulo">
                 </div>
@@ -15,26 +16,32 @@
 
             <div class="form-group">
                 <label class="col-lg-2 control-label">Latitude e Longitude</label>
+
                 <div class="col-lg-10">
                     <h4>{{local.latitude}}, {{local.longitude}}</h4>
                 </div>
             </div>
             <div class="form-group">
                 <label for="endereco" class="col-lg-2 control-label">Endereço</label>
+
                 <div class="col-lg-10">
-                    <input id="endereco" class="form-control" type="text" ng-model="local.endereco" placeholder="Endereço">
+                    <input id="endereco" class="form-control" type="text" ng-model="local.endereco"
+                           placeholder="Endereço">
                 </div>
             </div>
             <div class="form-group">
                 <label for="select" class="col-lg-2 control-label">Categoria</label>
+
                 <div class="col-lg-10">
-                    <select ng-options="tipo.label for tipo in tipos" class="form-control" ng-model="local.categoria" id="select">
+                    <select ng-options="tipo.label for tipo in tipos" class="form-control" ng-model="local.categoria"
+                            id="select">
                         <option value="">-- Escolha uma categoria --</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="valor" class="col-lg-2 control-label">Valor</label>
+
                 <div class="col-lg-10">
                     <select id="valor" ng-model="local.valor" class="form-control">
                         <option>$ - Barato</option>
@@ -46,8 +53,10 @@
             </div>
             <div class="form-group">
                 <label for="extra" class="col-lg-2 control-label">Informações Extras</label>
+
                 <div class="col-lg-10 input-group">
                     <input id="extra" class="form-control" type="text" ng-model="extra" placeholder="Informação">
+
                     <div class="input-group-btn">
                         <button class="btn btn-primary" ng-click="addExtra()">
                             <span class="glyphicon glyphicon-plus"></span>
@@ -56,7 +65,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <ul class="list-group" >
+                <ul class="list-group">
                     <li class="list-group-item active">Informações Extras</li>
                     <li class="list-group-item" ng-repeat="extra in local.infos">
                         {{extra}}
