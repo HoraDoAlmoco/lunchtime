@@ -59,6 +59,24 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
 
         }
 
+        $scope.convidar = function(grupo){
+            //vai chamar um popup que cria um link para a pessoa se cadastrar já sendo adicionada
+            //caso o email ja exista nos users ela somente é adicionada ao grupo.
+            //pensar na logica de expirar o pedido e criar um hash
+        };
+
+        $scope.salvar = function(grupo) {
+            //salvar aterações feitas no grupo.
+        };
+
+        $scope.excluir = function(grupo) {
+            //excluir o grupo, existe uma serie de verificações e pensamentos aqui.
+        };
+
+        $scope.tornarprincipal = function(grupo) {
+            //tornar esse grupo o principal para este usuario.
+        };
+
         $scope.initGrupos = function () {
             waitingDialog.show();
             Usuario.getById($stateParams.user).then(function (usuario) {

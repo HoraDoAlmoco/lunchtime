@@ -6,6 +6,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .text-white {
@@ -503,12 +504,18 @@ input[type="checkbox"]:after,
 
 .navbar-back a {
     color: #FFFFFF;
-    font-size: 13px;
+    font-size: 22px;
     text-decoration: none;
 }
 
 .navbar-back a:hover {
     color: #bbbbbb;
+}
+
+.lt-navbar-text {
+    font-size: 22px;
+    margin-top: 15px;
+    margin-bottom: 0px;
 }
 
 .list-groups {
