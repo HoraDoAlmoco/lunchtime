@@ -1,6 +1,6 @@
 angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais',
-    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais) {
+    'Usuario', 'Grupo', 'Listas', 'Locais', 'md5', '$modal',
+    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, md5, $modal) {
         $rootScope.bodybg = {
             background: '#FFFFFF'
         };
@@ -59,21 +59,39 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
 
         }
 
-        $scope.convidar = function(grupo){
+        $scope.convidar = function (grupo) {
             //vai chamar um popup que cria um link para a pessoa se cadastrar já sendo adicionada
             //caso o email ja exista nos users ela somente é adicionada ao grupo.
             //pensar na logica de expirar o pedido e criar um hash
+            $scope.hashinvite = md5.createHash($scope.iduser + "/" + $scope.idgrupo + "/");
+            $modal
+                .open({
+                    templateUrl: 'invite.html',
+                    controller: 'InviteController',
+                    resolve: {
+                        ctrlScope: function () {
+                            return $scope
+                        }
+                    }
+                })
+                .result.then(function () {
+
+                }, function () {
+
+                });
+
+
         };
 
-        $scope.salvar = function(grupo) {
+        $scope.salvar = function (grupo) {
             //salvar aterações feitas no grupo.
         };
 
-        $scope.excluir = function(grupo) {
+        $scope.excluir = function (grupo) {
             //excluir o grupo, existe uma serie de verificações e pensamentos aqui.
         };
 
-        $scope.tornarprincipal = function(grupo) {
+        $scope.tornarprincipal = function (grupo) {
             //tornar esse grupo o principal para este usuario.
         };
 
@@ -103,3 +121,21 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
         };
 
     }]);
+angular.module('lunchtime').controller('InviteController', function ($scope, ctrlScope, md5, $location) {
+    $scope.linkhash = "";
+    $scope.emailconvite = "";
+
+    $scope.gerarLink = function () {
+        if ($scope.emailconvite) {
+            var hashmd5 = md5.createHash(ctrlScope.iduser + "/" + ctrlScope.idgrupo + $scope.emailconvite);
+            $scope.linkhash = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/invite/" + hashmd5;
+        }
+    };
+
+    $scope.confirmarEnvio = function(){
+        $scope.$close(true);
+    };
+
+
+
+});

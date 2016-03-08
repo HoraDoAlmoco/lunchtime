@@ -315,10 +315,11 @@ input[type="checkbox"]:after,
 }
 
 .marker-labels {
-    color: #333333;
+    color: #d2691e;
     text-align: center;
     white-space: nowrap;
     font-size: 11px;
+    font-weight: 700;
     text-shadow: 0 1px 10px rgba(255, 255, 255, 1),
     0 -1px 10px rgba(255, 255, 255, 1),
     1px 0 10px rgba(255, 255, 255, 1),
@@ -596,6 +597,11 @@ input[type="checkbox"]:after,
 
 .btn-add-grp:hover {
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.link-invite {
+    font-size: 16px;
+    font-weight: 500;
 }
 
 @media (min-width: 867px) {
