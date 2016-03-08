@@ -319,12 +319,12 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
 
         var createMarker = function(info, zIndex) {
             var eixox = 1;
-            var eixoy = 136;
+            var eixoy = 92;
             if(info.votos && Number(info.votos.length) > 1){
                 eixox = (Number(info.votos.length) - 1) * 35 + 1;
             }
             if(info.votado) {
-                eixoy = 92;
+                eixoy = 136;
             }
 
             var icon;
