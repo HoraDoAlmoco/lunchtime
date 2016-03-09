@@ -53,6 +53,13 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
 
         $scope.map.mapTypes.set('lunchtimemap', lunchtimeMapType);
         $scope.map.setMapTypeId('lunchtimemap');
+        directionsDisplay = new google.maps.DirectionsRenderer(
+            {
+                map : $scope.map,
+                preserveViewport: true,
+                suppressMarkers: true
+            }
+        );
 
         if(!service) {
             service = new google.maps.places.PlacesService($scope.map);
@@ -111,6 +118,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
         }
 
         $scope.markerClicado = function(marker) {
+            /*
             $scope.markerSelecionado = marker;
             var usuarios = [];
             var grupo = $filter('filter')(marker.localObj.grupos, {grupo : $stateParams.grupo}, true);
@@ -125,16 +133,54 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                     });
                 }
                 $scope.markerSelecionado.usuarios = usuarios;
+                */
+
+                directionsService.route({
+                    origin: new google.maps.LatLng(grupoPrincipal.latitude, grupoPrincipal.longitude),
+                    destination: marker.position,
+                    travelMode: google.maps.TravelMode.WALKING
+                }, function(response, status) {
+                    if (status === google.maps.DirectionsStatus.OK) {
+
+                        //
+                        $scope.markerSelecionado = marker;
+                        var usuarios = [];
+                        var grupo = $filter('filter')(marker.localObj.grupos, {grupo : $stateParams.grupo}, true);
+                        var grupoSelecionado = {};
+                        if(grupo) {
+                            grupoSelecionado = grupo[0];
+                            for (var i = 0; i < grupoSelecionado.votos.length; i++) {
+                                Usuario.getById(grupoSelecionado.votos[i]).then(function (usuario) {
+                                    if (usuario) {
+                                        usuarios.push(usuario.nome);
+                                    }
+                                });
+                            }
+                            $scope.markerSelecionado.usuarios = usuarios;
+
+                        }
+                        //
+
+                        directionsDisplay.setDirections(response);
+                        if(!$scope.$$phase) {
+                            $scope.$apply();
+                        }
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+/*
                 if(!$scope.$$phase) {
                     $scope.$apply();
                 }
-            }
+            }*/
         };
 
         google.maps.event.addListener($scope.map, 'click', function (e) {
             var mapCard = $(".map-card-detail-lg");
             $(mapCard).removeClass("open-com-menu");
             $(mapCard).removeClass("open-sem-menu");
+            $rootScope.openCloseClass = "";
             $rootScope.openCloseCardClass = "";
             if(!$scope.$$phase) {
                 $scope.$apply();
