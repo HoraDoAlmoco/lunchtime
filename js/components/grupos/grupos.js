@@ -6,6 +6,7 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
         };
 
         $scope.maps = [];
+        $scope.nomesOriginais = [];
 
         $scope.iduser = $stateParams.user;
         $scope.idgrupo = $stateParams.grupo;
@@ -63,7 +64,6 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
             //vai chamar um popup que cria um link para a pessoa se cadastrar já sendo adicionada
             //caso o email ja exista nos users ela somente é adicionada ao grupo.
             //pensar na logica de expirar o pedido e criar um hash
-            $scope.hashinvite = md5.createHash($scope.iduser + "/" + $scope.idgrupo + "/");
             $modal
                 .open({
                     templateUrl: 'invite.html',
@@ -71,6 +71,9 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
                     resolve: {
                         ctrlScope: function () {
                             return $scope
+                        },
+                        grupo: function () {
+                            return grupo
                         }
                     }
                 })
@@ -93,6 +96,16 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
 
         $scope.tornarprincipal = function (grupo) {
             //tornar esse grupo o principal para este usuario.
+            Usuario.getById($scope.iduser).then(function (usuario) {
+                if(usuario) {
+                    usuario.grupoPrincipal = grupo._id.$oid;
+                    usuario.$saveOrUpdate().then(function (){
+                        $cookies.put("ltgrupoPrincipalKey", usuario.grupoPrincipal);
+                        $cookies.putObject("ltgrupoPrincipal", grupo);
+                        $state.go("group",{user : $scope.iduser, grupo : usuario.grupoPrincipal});
+                    });
+                }
+            });
         };
 
         $scope.initGrupos = function () {
@@ -109,33 +122,41 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
                 Grupo.query(query).then(function (grupos) {
                     $scope.grupos = grupos;
                     $scope.grupoPrincipal = usuario.grupoPrincipal;
-                    /*
-                     angular.forEach($scope.grupos, function(grupo){
 
-                     });
-                     */
+                    angular.forEach($scope.grupos, function(grupo){
+                        $scope.nomesOriginais.push(grupo.nome);
+                    });
+
                     waitingDialog.hide();
                 })
             });
 
         };
 
+        $scope.blurNome = function (index) {
+            if($scope.grupos[index].nome === "") {
+                $scope.grupos[index].nome = $scope.nomesOriginais[index];
+            }
+        };
+
     }]);
-angular.module('lunchtime').controller('InviteController', function ($scope, ctrlScope, md5, $location) {
+
+angular.module('lunchtime').controller('InviteController', function ($scope, ctrlScope, md5, $location, grupo) {
     $scope.linkhash = "";
     $scope.emailconvite = "";
 
     $scope.gerarLink = function () {
         if ($scope.emailconvite) {
-            var hashmd5 = md5.createHash(ctrlScope.iduser + "/" + ctrlScope.idgrupo + $scope.emailconvite);
+            var hashmd5 = md5.createHash(ctrlScope.iduser + "/" + grupo._id.$oid + "/" +  $scope.emailconvite);
             $scope.linkhash = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/invite/" + hashmd5;
         }
     };
 
-    $scope.confirmarEnvio = function(){
+    $scope.confirmarEnvio = function () {
         $scope.$close(true);
     };
 
-
-
+    $scope.cancelarEnvio = function () {
+        $scope.$dismiss();
+    };
 });

@@ -43,7 +43,8 @@
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2">
                                     <input id="nome" ng-readonly="grupo.criador !== iduser" class="form-control"
-                                           type="text" ng-model="grupo.nome" placeholder="Nome do Grupo">
+                                           type="text" ng-model="grupo.nome" placeholder="Nome do Grupo"
+                                            ng-blur="blurNome($index);">
                                     <hr>
                                 </div>
                             </div>
@@ -111,7 +112,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-warning" ng-click="" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-warning" ng-click="cancelarEnvio()" data-dismiss="modal">Cancelar</button>
             <button type="button" class="btn btn-success" ng-click="confirmarEnvio()">Confirmar envio</button>
         </div>
     </script>
