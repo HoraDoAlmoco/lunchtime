@@ -61,16 +61,15 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
         }
 
         $scope.criarGrupo = function () {
-            $modal
-                .open({
-                    templateUrl: 'addgrupo.html',
-                    controller: 'AddGrupoController',
-                    resolve: {
-                        ctrlScope: function () {
-                            return $scope
-                        }
+            $modal.open({
+                templateUrl: 'addgrupo.html',
+                controller: 'AddGrupoController',
+                resolve: {
+                    ctrlScope: function () {
+                        return $scope
                     }
-                }).result.then(function () {
+                }
+            }).result.then(function () {
                     $state.reload();
                 }, function () {
                     $state.reload();
