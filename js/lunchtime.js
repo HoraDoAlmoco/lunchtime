@@ -1,4 +1,6 @@
 var service;
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
 var resultadoBusca = {};
 angular.module("lunchtime", [
     'ui.router', 'ngResource', 'mongolabResourceHttp',
@@ -28,7 +30,7 @@ function fixInfoWindow() {
     google.maps.InfoWindow.prototype.set = function (key, val) {
         var self = this;
         if (key === "map") {
-            if (!this.anchor) {
+            if (!this.anchor && self.getPosition()) {
                 var lat = self.getPosition().lat();
                 var lng = self.getPosition().lng();
 
