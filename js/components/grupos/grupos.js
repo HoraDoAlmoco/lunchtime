@@ -1,11 +1,12 @@
 angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais',
-    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais) {
+    'Usuario', 'Grupo', 'Listas', 'Locais', 'md5', '$modal',
+    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, md5, $modal) {
         $rootScope.bodybg = {
             background: '#FFFFFF'
         };
 
         $scope.maps = [];
+        $scope.nomesOriginais = [];
 
         $scope.iduser = $stateParams.user;
         $scope.idgrupo = $stateParams.grupo;
@@ -59,22 +60,52 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
 
         }
 
-        $scope.convidar = function(grupo){
+        $scope.convidar = function (grupo) {
             //vai chamar um popup que cria um link para a pessoa se cadastrar já sendo adicionada
             //caso o email ja exista nos users ela somente é adicionada ao grupo.
             //pensar na logica de expirar o pedido e criar um hash
+            $modal
+                .open({
+                    templateUrl: 'invite.html',
+                    controller: 'InviteController',
+                    resolve: {
+                        ctrlScope: function () {
+                            return $scope
+                        },
+                        grupo: function () {
+                            return grupo
+                        }
+                    }
+                })
+                .result.then(function () {
+
+                }, function () {
+
+                });
+
+
         };
 
-        $scope.salvar = function(grupo) {
+        $scope.salvar = function (grupo) {
             //salvar aterações feitas no grupo.
         };
 
-        $scope.excluir = function(grupo) {
+        $scope.excluir = function (grupo) {
             //excluir o grupo, existe uma serie de verificações e pensamentos aqui.
         };
 
-        $scope.tornarprincipal = function(grupo) {
+        $scope.tornarprincipal = function (grupo) {
             //tornar esse grupo o principal para este usuario.
+            Usuario.getById($scope.iduser).then(function (usuario) {
+                if(usuario) {
+                    usuario.grupoPrincipal = grupo._id.$oid;
+                    usuario.$saveOrUpdate().then(function (){
+                        $cookies.put("ltgrupoPrincipalKey", usuario.grupoPrincipal);
+                        $cookies.putObject("ltgrupoPrincipal", grupo);
+                        $state.go("group",{user : $scope.iduser, grupo : usuario.grupoPrincipal});
+                    });
+                }
+            });
         };
 
         $scope.initGrupos = function () {
@@ -91,15 +122,41 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
                 Grupo.query(query).then(function (grupos) {
                     $scope.grupos = grupos;
                     $scope.grupoPrincipal = usuario.grupoPrincipal;
-                    /*
-                     angular.forEach($scope.grupos, function(grupo){
 
-                     });
-                     */
+                    angular.forEach($scope.grupos, function(grupo){
+                        $scope.nomesOriginais.push(grupo.nome);
+                    });
+
                     waitingDialog.hide();
                 })
             });
 
         };
 
+        $scope.blurNome = function (index) {
+            if($scope.grupos[index].nome === "") {
+                $scope.grupos[index].nome = $scope.nomesOriginais[index];
+            }
+        };
+
     }]);
+
+angular.module('lunchtime').controller('InviteController', function ($scope, ctrlScope, md5, $location, grupo) {
+    $scope.linkhash = "";
+    $scope.emailconvite = "";
+
+    $scope.gerarLink = function () {
+        if ($scope.emailconvite) {
+            var hashmd5 = md5.createHash(ctrlScope.iduser + "/" + grupo._id.$oid + "/" +  $scope.emailconvite);
+            $scope.linkhash = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/invite/" + hashmd5;
+        }
+    };
+
+    $scope.confirmarEnvio = function () {
+        $scope.$close(true);
+    };
+
+    $scope.cancelarEnvio = function () {
+        $scope.$dismiss();
+    };
+});

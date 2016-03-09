@@ -270,7 +270,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             clearMarkers();
             $scope.markers = [];
             $scope.bounds = new google.maps.LatLngBounds();
-            Locais.query(query).then(function(locais){
+            Locais.query(query, { sort: {"grupos.votos": -1} }).then(function(locais){
                 var groupLatLng = new google.maps.LatLng(grupoPrincipal.latitude, grupoPrincipal.longitude);
                 var zIndex = google.maps.Marker.MAX_ZINDEX - (locais.length + 1) ;
                 locais.forEach(function(local){

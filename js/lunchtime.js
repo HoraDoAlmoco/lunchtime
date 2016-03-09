@@ -2,7 +2,7 @@ var service;
 var resultadoBusca = {};
 angular.module("lunchtime", [
     'ui.router', 'ngResource', 'mongolabResourceHttp',
-    'ngCookies', 'ngAnimate', 'ui.bootstrap'
+    'ngCookies', 'ngAnimate', 'ui.bootstrap', 'ngMd5'
 ])
     .run(function ($rootScope, $state, $cookies) {
 
