@@ -604,6 +604,10 @@ input[type="checkbox"]:after,
     font-weight: 500;
 }
 
+.pac-container {
+    z-index: 9999;
+}
+
 @media (min-width: 867px) {
     .navbar-form {
         width: 66%;
