@@ -62,18 +62,22 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
 
         $scope.criarGrupo = function () {
             $modal.open({
-                templateUrl: 'addgrupo.html',
+                templateUrl: 'views/modal/addgrupo.html',
                 controller: 'AddGrupoController',
                 resolve: {
                     ctrlScope: function () {
                         return $scope
+                    },
+                    grupoDB: function () {
+                        return Grupo
+                    },
+                    usuarioDB : function () {
+                        return Usuario
                     }
                 }
             }).result.then(function () {
                     $state.reload();
-                }, function () {
-                    $state.reload();
-                });
+                }, function () {});
         };
 
         $scope.convidar = function (grupo) {
@@ -82,7 +86,7 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
             //pensar na logica de expirar o pedido e criar um hash
             $modal
                 .open({
-                    templateUrl: 'invite.html',
+                    templateUrl: 'views/modal/invite.html',
                     controller: 'InviteController',
                     resolve: {
                         ctrlScope: function () {
@@ -93,10 +97,8 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
                         }
                     }
                 }).result.then(function () {
-                    console.log("ok");
-                }, function () {
-                    console.log("cancel");
-                });
+                    $state.reload();
+                }, function () {});
         };
 
         $scope.salvar = function (grupo) {
@@ -174,7 +176,7 @@ angular.module('lunchtime').controller('InviteController', function ($scope, ctr
     };
 });
 
-angular.module('lunchtime').controller('AddGrupoController', function ($scope, ctrlScope, $modalInstance) {
+angular.module('lunchtime').controller('AddGrupoController', function ($scope, ctrlScope, grupoDB, usuarioDB) {
     $scope.newmapa = {};
     var defaultposition = new google.maps.LatLng(-22.904265, -43.174494);
     $scope.newgrupo = {
@@ -226,7 +228,21 @@ angular.module('lunchtime').controller('AddGrupoController', function ($scope, c
     $scope.confirmarCriacao = function () {
         if ($scope.newgrupo.nome && $scope.newgrupo.latitude && $scope.newgrupo.longitude) {
             //tem algo preenchido
-            $scope.$close(true);
+            var grupo = new grupoDB();
+            grupo.nome = $scope.newgrupo.nome;
+            grupo.endereco = $scope.newgrupo.endereco;
+            grupo.latitude = String($scope.newgrupo.latitude);
+            grupo.longitude = String($scope.newgrupo.longitude);
+            grupo.criador = $scope.newgrupo.criador;
+
+            grupo.$saveOrUpdate().then(function (gruposalvo) {
+                usuarioDB.getById(ctrlScope.iduser).then(function (usuario) {
+                    usuario.grupos.push(gruposalvo._id.$oid);
+                    usuario.$saveOrUpdate().then(function () {
+                        $scope.$close(true);
+                    });
+                });
+            });
         }
     };
 

@@ -1,6 +1,6 @@
 angular.module('lunchtime').controller('UserController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais',
-    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais) {
+    'Usuario', 'Grupo', 'Listas', 'Locais', 'user', 'grupo',
+    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, user, grupo) {
 
         $rootScope.bodybg = {
             background: '#FFFFFF'
@@ -11,7 +11,7 @@ angular.module('lunchtime').controller('UserController', ['$scope', '$rootScope'
         $scope.rpassword = "";
 
         $scope.initFormUser = function () {
-            Usuario.getById($stateParams.user).then(function (usuario) {
+            Usuario.getById(user).then(function (usuario) {
                 $scope.usuario = usuario;
             });
         };

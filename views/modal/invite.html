@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h4 class="modal-title">Link para convite</h4>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="email" class="col-lg-2 control-label">E-mail de convite</label>
+        <div class="col-lg-10">
+            <input id="email" class="form-control" type="email" ng-model="emailconvite" placeholder="E-mail">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-12 vertical-center">
+            <button class="btn btn-primary" ng-click="gerarLink()">Gerar link</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <span class="col-lg-12 text-center">Link do convite</span>
+    </div>
+    <div class="form-group">
+        <span class="col-lg-12 text-center link-invite">{{linkhash}}</span>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-lg-12">
+        <hr>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning" ng-click="cancelarEnvio()" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-success" ng-click="confirmarEnvio()">Confirmar envio</button>
+</div>

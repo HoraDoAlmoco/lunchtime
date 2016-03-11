@@ -31,7 +31,7 @@ angular.module('lunchtime')
             restrict: 'A',
             replace: true,
             templateUrl: 'views/directives/header.html',
-            controller: ['$scope', '$rootScope', '$state', function ($scope, $rootScope, $state) {
+            controller: ['$scope', '$rootScope', '$state', '$modal', function ($scope, $rootScope, $state, $modal) {
                 $rootScope.openCloseClass = "";
                 $rootScope.openCloseMapClass = "";
                 $scope.searchtext = {"titulo": ""};
@@ -60,7 +60,26 @@ angular.module('lunchtime')
                 };
 
                 $scope.openUser = function (user, grupo) {
-                    $state.transitionTo('user', {grupo: grupo, user: user});
+                    //$state.transitionTo('user', {grupo: grupo, user: user});
+
+                    $modal.open({
+                        templateUrl: "views/modal/user.html",
+                        controller: "UserController",
+                        resolve: {
+                            grupo: function () {
+                                return grupo
+                            },
+                            user: function () {
+                                return user
+                            }
+                        }
+                    }).result.then(function () {
+                            $state.reload();
+                        }, function () {
+
+                        });
+
+
                 };
                 $scope.openGroup = function (user, grupo) {
                     $state.transitionTo('group', {grupo: grupo, user: user});
@@ -81,6 +100,8 @@ angular.module('lunchtime')
                     $(mapCard).removeClass("open-com-menu");
                     $(mapCard).removeClass("open-sem-menu");
                     $rootScope.openCloseCardClass = "";
+                    directionsDisplay.set('directions', null);
+
                 };
                 $scope.btnVotoTP = function (marker) {
                     return marker.votado ? "Retirar Voto" : "Votar";
