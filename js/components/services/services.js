@@ -1,7 +1,4 @@
 angular.module('lunchtime')
-    .factory('Locais',function($mongolabResourceHttp){
-    return $mongolabResourceHttp('locais');
-    })
     .factory('Usuario',function($mongolabResourceHttp){
         return $mongolabResourceHttp('users');
     })
@@ -10,6 +7,9 @@ angular.module('lunchtime')
     })
     .factory('Locais',function($mongolabResourceHttp){
         return $mongolabResourceHttp('locations');
+    })
+    .factory('Invites',function($mongolabResourceHttp){
+        return $mongolabResourceHttp('invites');
     })
     .factory('Listas', [function(){
         return {

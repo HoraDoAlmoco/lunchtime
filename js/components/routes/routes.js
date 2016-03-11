@@ -25,5 +25,13 @@ angular.module('lunchtime').config(function ($stateProvider, $urlRouterProvider)
             },
             templateUrl: "views/grupos/grupos.html",
             controller: "GroupController"
+        })
+        .state('invite', {
+            url: "/invite/:hashinvite",
+            data: {
+                requiredlogin: false
+            },
+            templateUrl: "views/invites/invite.html",
+            controller: "AceptInviteController"
         });
 });

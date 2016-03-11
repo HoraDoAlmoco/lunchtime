@@ -1,8 +1,9 @@
 angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais', 'md5', '$modal',
-    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, md5, $modal) {
+    'Usuario', 'Grupo', 'Listas', 'Locais', 'md5', '$modal', 'Invites',
+    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, md5, $modal, Invites) {
         $rootScope.bodybg = {
-            background: '#FFFFFF'
+            background: '#FFFFFF',
+            overflow: 'auto'
         };
 
         $scope.maps = [];
@@ -94,6 +95,12 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
                         },
                         grupo: function () {
                             return grupo
+                        },
+                        inviteDB: function () {
+                            return Invites
+                        },
+                        usuarioDB : function () {
+                            return Usuario
                         }
                     }
                 }).result.then(function () {
@@ -101,8 +108,17 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
                 }, function () {});
         };
 
+        $scope.listClick = function () {
+            console.log('clicadinho');
+        };
+
         $scope.salvar = function (grupo) {
             //salvar aterações feitas no grupo.
+            if(grupo.nome && grupo.latitude && grupo.longitude) {
+                grupo.$saveOrUpdate().then(function () {
+                    $state.reload();
+                });
+            }
         };
 
         $scope.excluir = function (grupo) {
@@ -156,20 +172,79 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
 
     }]);
 
-angular.module('lunchtime').controller('InviteController', function ($scope, ctrlScope, md5, $location, grupo) {
+angular.module('lunchtime').controller('InviteController', function ($scope, ctrlScope, md5, $location, grupo, inviteDB, usuarioDB) {
     $scope.linkhash = "";
     $scope.emailconvite = "";
+    $scope.inviteError = "";
 
     $scope.gerarLink = function () {
         if ($scope.emailconvite) {
-            var hashmd5 = md5.createHash(ctrlScope.iduser + "/" + grupo._id.$oid + "/" + $scope.emailconvite);
-            $scope.linkhash = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/invite/" + hashmd5;
+            $scope.hashmd5 = md5.createHash(ctrlScope.iduser + "/" + grupo._id.$oid + "/" + $scope.emailconvite);
+            $scope.linkhash = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/invite/" + $scope.hashmd5;
         }
     };
 
     $scope.confirmarEnvio = function () {
-        $scope.$close('ok');
+        if ($scope.emailconvite && $scope.hashmd5) {
+            var userq = {
+                email: $scope.emailconvite,
+                lunchtime: true
+            };
+            usuarioDB.query(userq).then(function (usuarios) {
+                if(usuarios[0]) {
+                    //ja existe essa pessoa no lunchtime.
+                    //vamos ver se ela ja nao esta no grupo.
+                    if(usuarios[0].grupos.indexOf(grupo._id.$oid) > -1) {
+                        //ja esta no grupo .. retorna um erro.
+                        $scope.inviteError = "Email já cadastrado e está no grupo";
+                    } else {
+                        //de boa para adicionar ao lunchtime
+                        criarConvite();
+                    }
+                } else {
+                    //nao esta .. entao pode fazer normal
+                    criarConvite();
+                }
+            });
+        }
     };
+
+    function criarConvite () {
+        var query = {
+            hashlink : $scope.hashmd5
+        };
+
+        inviteDB.query(query).then(function (invites) {
+            //ver se ja possui o invite para esse hash
+            var invite = new inviteDB();
+            invite.hashlink = $scope.hashmd5;
+            invite.emailconvite = $scope.emailconvite;
+            invite.user = ctrlScope.iduser;
+            invite.grupo = grupo._id.$oid;
+            invite.data = new Date();
+
+            if(invites[0]) {
+                //possui algo nesse hash.
+                var diasDiff = Math.floor((new Date() - new Date(invites[0].data)) /(1000*60*60*24));
+                //um mes
+                if(diasDiff > 30) {
+                    //renovo a data.
+                    invites[0].data = new Date();
+                    invites[0].$saveOrUpdate().then(function () {
+                        $scope.$close('ok');
+                    });
+                } else {
+                    //nem preciso atualizar nada.
+                    $scope.$close('ok');
+                }
+            } else {
+                //nao tem nada.
+                invite.$saveOrUpdate().then(function () {
+                    $scope.$close('ok');
+                });
+            }
+        });
+    }
 
     $scope.cancelarEnvio = function () {
         $scope.$dismiss('cancel');

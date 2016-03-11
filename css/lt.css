@@ -13,12 +13,23 @@ html, body {
     color: #FFFFFF !important;
 }
 
+.text-red-lt {
+    color: #DB4437 !important;
+}
+
 .top-10 {
     margin-top: 10px;
 }
 
 .vertical-center {
     min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vertical-center-invite {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,8 +46,8 @@ html, body {
     -webkit-font-smoothing: antialiased;
     font-family: "Lobster", sans-serif;
     font-weight: 400;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 1.0);
-    color: #fff;
+    /*text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);*/
+    color: #DB4437;
     font-size: 4em;
     text-align: center;
     line-height: 1.2;
@@ -65,6 +76,17 @@ html, body {
     text-shadow: 0 0 10px rgba(0, 0, 0, 1.0);
     line-height: 1.2;
     margin: 0 0 25px;
+}
+
+.ac-invite-text {
+    -webkit-font-smoothing: antialiased;
+    font-weight: 300;
+    color: rgba(0,0,0,0.87);
+    /*text-shadow: 0 0 10px rgba(0, 0, 0, 1.0);*/
+}
+
+.ac-subtitle {
+    font-size: 16px;
 }
 
 input[type="checkbox"]:after,
@@ -600,12 +622,19 @@ input[type="checkbox"]:after,
 }
 
 .link-invite {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
 }
 
 .pac-container {
     z-index: 9999;
+}
+
+.ac-invite-container {
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 @media (min-width: 867px) {
