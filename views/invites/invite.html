@@ -1,0 +1,68 @@
+<div class="container text-center vertical-center-invite" ng-init="initFnc()">
+    <div class="ac-invite-container">
+        <p class="h1 ac-invite-text" ng-show="expirado">Seu convite está expirado.</p>
+
+        <span class="h4 ac-invite-text" ng-show="convite">Olá </span>
+        <span class="h4 ac-invite-text" ng-show="existeLunchTime && convite">{{userLunchTime.nome}}/</span>
+        <span class="h4 ac-invite-text" ng-show="convite">{{userLunchTime.email}}</span>
+        <br ng-show="convite"/>
+
+        <p class="h3 ac-invite-text" ng-show="convite">Bem vindo(a) ao </p>
+
+        <h2 class="form-signin-heading">
+            <span class="font-high">L</span>unch<span class="font-high">T</span>ime
+        </h2>
+
+        <p class="ac-invite-text ac-subtitle" ng-show="convite">
+            Você foi convidado(a) por {{userEnvio.nome}}/{{userEnvio.email}}
+        </p>
+
+        <p class="ac-invite-text ac-subtitle" ng-show="convite">
+            Para fazer parte do grupo: {{grupoConvite.nome}}
+        </p>
+
+        <div ng-show="cadastro">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="h4">{{userLunchTime.email}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="cpassword">Nome</label>
+                </div>
+                <div class="col-md-10">
+                    <input id="nome" required="" ng-focus="cadastroError = ''" class="form-control" type="text" ng-model="userLunchTime.nome" placeholder="Nome">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="cpassword">Senha</label>
+                </div>
+                <div class="col-md-10">
+                    <input id="password" required="" ng-focus="cadastroError = ''" class="form-control" type="password" ng-model="userLunchTime.password" placeholder="Senha">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="cpassword">Confirmar senha</label>
+                </div>
+                <div class="col-md-10">
+                    <input id="cpassword" ng-focus="cadastroError = ''" required="" class="form-control" type="password" ng-model="cpassword" placeholder="Confirmar senha">
+                </div>
+            </div>
+            <div ng-show="cadastroError.length > 0" class="alert alert-dismissible alert-danger">
+                <strong>{{cadastroError}}</strong>
+            </div>
+        </div>
+
+        <button class="btn btn-lg btn-danger btn-block" ng-show="convite" ng-click="aceitar()" type="button">
+            Aceitar convite
+        </button>
+
+        <button class="btn btn-lg btn-danger btn-block" ng-show="cadastro" ng-click="cadastrar()" type="button">
+            Cadastrar
+        </button>
+
+    </div>
+</div>

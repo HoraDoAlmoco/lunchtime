@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h4 class="modal-title">Criar novo grupo</h4>
+</div>
+<div class="modal-body" ng-init="initAdd()">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input id="newnome" class="form-control" type="text" ng-model="newgrupo.nome" placeholder="Nome do Grupo">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="group-map-detail" id="map-canvas-new"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input id="endereco" class="form-control" type="text" ng-model="newgrupo.endereco" placeholder="Endereço">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <span>Latitude: {{newgrupo.latitude}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <span>Longitude: {{newgrupo.longitude}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning" ng-click="cancelarCriacao()" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-primary" ng-click="confirmarCriacao()">Confirmar criação</button>
+</div>

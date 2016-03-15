@@ -1,13 +1,13 @@
 angular.module('lunchtime').controller('LocalController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais',
-    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais) {
+    'Usuario', 'Grupo', 'Listas', 'Locais', 'grupo',
+    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, grupo) {
         $scope.local = {
             "titulo" : resultadoBusca[0] ? resultadoBusca[0].name : "",
             "place_id" : resultadoBusca[0] ? resultadoBusca[0].place_id : "",
             "latitude" : resultadoBusca[0] ? resultadoBusca[0].geometry.location.lat() : "",
             "longitude" : resultadoBusca[0] ? resultadoBusca[0].geometry.location.lng() : "",
             "endereco" : resultadoBusca[0] ? resultadoBusca[0].vicinity : "",
-            "grupo" : $stateParams.grupo,
+            "grupo" : grupo,
             "categoria" : "",
             "valor" : "",
             "infos" : []
@@ -41,7 +41,7 @@ angular.module('lunchtime').controller('LocalController', ['$scope', '$rootScope
 
             //verificar o local ja existe na base em outro grupo.
             var objGrupo = {
-                "grupo": $stateParams.grupo,
+                "grupo": grupo,
                 "titulo": $scope.local.titulo,
                 "categoria": $scope.local.categoria.id,
                 "valor": recuperaValor($scope.local.valor),
