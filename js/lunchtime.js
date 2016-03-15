@@ -58,7 +58,7 @@ function fixInfoWindow() {
 
                 service.nearbySearch(request, function (results, status) {
                     resultadoBusca = results;
-                    var link = angular.element("<button class='btn btn-danger map-add-group' set-on-click onclick='outaddtogroup(\"" + title + "\")'>Adicionar ao grupo</button>");
+                    var link = angular.element("<button class='btn btn-danger map-add-group' set-on-click onclick='outaddtogroup(\"" + title.replace("'","") + "\")'>Adicionar ao grupo</button>");
                     angular.element(gmrev).html("");
                     angular.element(gmrev).removeAttr("jsaction");
                     angular.element(gmrev).append(angular.element("<div></div>").append(link));
