@@ -395,7 +395,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
         };
 
         $scope.addtogroup = function (nome) {
-            if (resultadoBusca[0] && (resultadoBusca[0].name === nome)) {
+            if (resultadoBusca[0] && (resultadoBusca[0].name.replace("'","") === nome)) {
                 //$state.transitionTo('addlocal', {grupo:$stateParams.grupo});
                 $modal.open({
                     templateUrl: "views/modal/local.html",
