@@ -17,7 +17,14 @@ angular.module('lunchtime').controller('UserController', ['$scope', '$rootScope'
         };
 
         $scope.salvarUser = function () {
-            $scope.$close(true);
+            var valido = false;
+            if($scope.npassword) {
+                //tentativa de mudanca de senha
+
+            }
+            if(valido) {
+                $scope.$close(true);
+            }
         };
 
         $scope.cancelarUser = function(){
@@ -25,7 +32,7 @@ angular.module('lunchtime').controller('UserController', ['$scope', '$rootScope'
         };
 
         $scope.cancelarConta = function () {
-            $scope.$close(true);
+            $scope.$dismiss();
         };
 
     }]);
