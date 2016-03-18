@@ -108,8 +108,33 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
                 }, function () {});
         };
 
+        $scope.listaConvite = function (grupo) {
+
+            $modal
+                .open({
+                    templateUrl: 'views/modal/list-invite.html',
+                    controller: 'ListInviteController',
+                    resolve: {
+                        ctrlScope: function () {
+                            return $scope
+                        },
+                        grupo: function () {
+                            return grupo
+                        },
+                        inviteDB: function () {
+                            return Invites
+                        },
+                        usuarioDB : function () {
+                            return Usuario
+                        }
+                    }
+                }).result.then(function () {
+
+                }, function () {});
+        };
+
         $scope.listClick = function () {
-            console.log('clicadinho');
+
         };
 
         $scope.salvar = function (grupo) {
@@ -171,6 +196,36 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
         };
 
     }]);
+
+angular.module('lunchtime').controller('ListInviteController', function ($scope, ctrlScope, grupo, inviteDB, usuarioDB, $location) {
+
+    $scope.initLista = function () {
+        var uq = {
+            "user" : ctrlScope.iduser,
+            "grupo": grupo._id.$oid
+        };
+        inviteDB.query(uq).then(function (convites) {
+            if(convites) {
+                $scope.convites = convites;
+                angular.forEach($scope.convites, function(convite, indice){
+                    var diasDiff = Math.floor((new Date() - new Date(convite.data)) /(1000*60*60*24));
+                    convite.expirado = diasDiff > 30;
+                    convite.data = new Date(convite.data);
+                    convite.link = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/lunchtime/#/invite/" + convite.hashlink;
+                });
+            }
+        });
+    };
+
+    $scope.excluirConvite = function (convite, index) {
+        $scope.convites.splice(index, 1);
+        convite.$remove().then(function(){});
+    };
+
+    $scope.cancelarLista = function () {
+        $scope.$dismiss('cancel');
+    };
+});
 
 angular.module('lunchtime').controller('InviteController', function ($scope, ctrlScope, md5, $location, grupo, inviteDB, usuarioDB) {
     $scope.linkhash = "";

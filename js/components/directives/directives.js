@@ -103,6 +103,10 @@ angular.module('lunchtime')
                     directionsDisplay.set('directions', null);
 
                 };
+                $scope.classCardVote = function (marker) {
+                    return marker.votado ? "fa-thumbs-o-down" : "fa-thumbs-o-up";
+                };
+
                 $scope.btnVotoTP = function (marker) {
                     return marker.votado ? "Retirar Voto" : "Votar";
                 };
