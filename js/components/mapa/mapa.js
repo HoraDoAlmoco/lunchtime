@@ -27,7 +27,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             mapTypeControl: false,
             streetViewControl: true,
-            disableDefaultUI: true,
+            disableDefaultUI: false,
             mapTypeControlOptions: {
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'lunchtimemap']
             }

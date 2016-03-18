@@ -1,0 +1,23 @@
+<div class="modal-body" ng-init="initLista()">
+    <div class="row">
+        <div class="list-group">
+            <div class="list-group-item active">
+                Convites
+            </div>
+            <div class="list-group-item" ng-repeat="convite in convites">
+                <div class="pull-right">
+                    <button class="btn btn-danger" ng-click="excluirConvite(convite, $index);">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+                <p>Data do Convite: {{convite.data | date : 'dd/MM/yyyy'}}</p>
+                <p>Enviado para: {{convite.emailconvite}}</p>
+                <p ng-show="!convite.expirado">Link do convite: {{convite.link}}</p>
+                <p class="alert alert-danger" ng-show="convite.expirado">Expirado</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning" ng-click="cancelarLista()" data-dismiss="modal">Fechar</button>
+</div>

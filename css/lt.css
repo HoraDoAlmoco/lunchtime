@@ -9,6 +9,10 @@ html, body {
     overflow: hidden;
 }
 
+.lt-cursor-pointer {
+    cursor: pointer;
+}
+
 .text-white {
     color: #FFFFFF !important;
 }
@@ -307,8 +311,8 @@ input[type="checkbox"]:after,
     position: fixed;
     width: 100%;
     z-index: 3;
-    -webkit-transform: translateY(220px);
-    transform: translateY(220px);
+    -webkit-transform: translateY(600px);
+    transform: translateY(600px);
     -webkit-transition: -webkit-transform .35s cubic-bezier(0.4, 0, 0.2, 1),
     width .35s cubic-bezier(0.4, 0, 0.2, 1),
     height .35s cubic-bezier(0.4, 0, 0.2, 1);

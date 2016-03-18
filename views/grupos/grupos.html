@@ -27,16 +27,27 @@
                          ng-repeat="grupo in grupos">
                         <span class="list-group-item-heading h4 group-name" ng-click="setselectedrow($index, grupo)">{{grupo.nome}}</span>
                         <span class="pull-right list-icons">
-                            <span class="glyphicon glyphicon-user icon-user" ng-click="convidar(grupo);" tooltip="Convidar pessoa"></span>
+                            <span class="fa fa-user-plus icon-user" ng-show="$index === selectedrow"
+                                  ng-click="convidar(grupo);" tooltip="Convidar pessoa">
+                            </span>
+                            <span class="fa fa-envelope icon-user" ng-show="$index === selectedrow"
+                                  ng-click="listaConvite(grupo);" tooltip="Ver convites">
+                            </span>
                             <span class="glyphicon glyphicon-ok icon-save" ng-click="salvar(grupo);"
                                   ng-show="grupo.criador === iduser && $index === selectedrow"
-                                  tooltip="Salvar grupo"></span>
+                                  tooltip="Salvar grupo">
+                            </span>
                             <span class="glyphicon glyphicon-heart" ng-show="grupo._id.$oid === grupoPrincipal"
-                                  tooltip="Grupo principal"></span>
+                                  tooltip="Grupo principal">
+                            </span>
                             <span class="glyphicon glyphicon-heart-empty icon-fav"
-                                  ng-show="grupo._id.$oid !== grupoPrincipal" ng-click="tornarprincipal(grupo);" tooltip="Tornar principal"></span>
-                            <span class="glyphicon glyphicon-trash icon-delete" ng-click="excluir(grupo);" ng-show="grupo.criador === iduser"
-                                  tooltip="Excluir grupo"></span>
+                                  ng-show="grupo._id.$oid !== grupoPrincipal" ng-click="tornarprincipal(grupo);" tooltip="Tornar principal">
+
+                            </span>
+                            <span class="glyphicon glyphicon-trash icon-delete" ng-click="excluir(grupo);"
+                                  ng-show="grupo.criador === iduser  && $index === selectedrow" tooltip="Excluir grupo">
+
+                            </span>
                         </span>
 
                         <div class="group-detail" ng-class="{'detail-group-show':$index === selectedrow}">
