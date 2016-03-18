@@ -180,7 +180,7 @@ angular.module('lunchtime').controller('InviteController', function ($scope, ctr
     $scope.gerarLink = function () {
         if ($scope.emailconvite) {
             $scope.hashmd5 = md5.createHash(ctrlScope.iduser + "/" + grupo._id.$oid + "/" + $scope.emailconvite);
-            $scope.linkhash = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/invite/" + $scope.hashmd5;
+            $scope.linkhash = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/lunchtime/#/invite/" + $scope.hashmd5;
         }
     };
 
