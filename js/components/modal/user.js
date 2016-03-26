@@ -9,6 +9,8 @@ angular.module('lunchtime').controller('UserController', ['$scope', '$rootScope'
         $scope.apassword = "";
         $scope.npassword = "";
         $scope.rpassword = "";
+        $scope.valido = false;
+        $scope.errorString = "";
 
         $scope.initFormUser = function () {
             Usuario.getById(user).then(function (usuario) {
@@ -17,7 +19,22 @@ angular.module('lunchtime').controller('UserController', ['$scope', '$rootScope'
         };
 
         $scope.salvarUser = function () {
-            $scope.$close(true);
+            $scope.valido = false;
+            if($scope.npassword) {
+                //tentativa de mudanca de senha
+                if ($scope.npassword.length > 4) {
+
+                } else {
+                    $scope.errorString = "A nova senha deve ter mais de 4 digitos."
+                }
+            }
+            //verificar se houve mudanca no nome do usuario e nao troca de senha.
+            if($scope.apassword) {
+
+            }
+            if($scope.valido) {
+                $scope.$close(true);
+            }
         };
 
         $scope.cancelarUser = function(){
@@ -25,7 +42,7 @@ angular.module('lunchtime').controller('UserController', ['$scope', '$rootScope'
         };
 
         $scope.cancelarConta = function () {
-            $scope.$close(true);
+            $scope.$dismiss();
         };
 
     }]);

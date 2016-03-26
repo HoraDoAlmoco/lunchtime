@@ -43,6 +43,10 @@
                            placeholder="Repetir nova senha">
                 </div>
             </div>
+            <div class="alert alert-dismissible alert-danger" ng-show="!valido && errorString.length > 0">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>{{errorString}}</strong>
+            </div>
         </fieldset>
     </form>
 </div>

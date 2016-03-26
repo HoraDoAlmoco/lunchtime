@@ -6,12 +6,12 @@
             </div>
             <div class="list-group-item" ng-repeat="convite in convites">
                 <div class="pull-right">
-                    <button class="btn btn-danger" ng-click="excluirConvite(convite, $index);">
+                    <button class="btn btn-danger" ng-click="excluirConvite(convite, $index);" tooltip="Excluir convite">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </div>
-                <p>Data do Convite: {{convite.data | date : 'dd/MM/yyyy'}}</p>
-                <p>Enviado para: {{convite.emailconvite}}</p>
+                <p>Data do convite: {{convite.data | date : 'dd/MM/yyyy'}}</p>
+                <p>Email do convite: {{convite.emailconvite}}</p>
                 <p ng-show="!convite.expirado">Link do convite: {{convite.link}}</p>
                 <p class="alert alert-danger" ng-show="convite.expirado">Expirado</p>
             </div>
