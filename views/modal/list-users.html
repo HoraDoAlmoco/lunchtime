@@ -1,0 +1,16 @@
+<div class="modal-body" ng-init="initLista()">
+    <div class="row">
+        <div class="list-group">
+            <div class="list-group-item active">
+                Pessoas no grupo
+            </div>
+            <div class="list-group-item" ng-repeat="usuario in usuarios">
+                <p>Nome: {{usuario.nome}}</p>
+                <p>Email: {{usuario.email}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning" ng-click="cancelarLista()" data-dismiss="modal">Fechar</button>
+</div>

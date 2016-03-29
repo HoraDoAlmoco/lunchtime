@@ -33,6 +33,9 @@
                             <span class="fa fa-envelope icon-user" ng-show="$index === selectedrow"
                                   ng-click="listaConvite(grupo);" tooltip="Ver convites">
                             </span>
+                            <span class="fa fa-users icon-user" ng-show="$index === selectedrow"
+                                  ng-click="listaUsuarios(grupo);" tooltip="Ver pessoas">
+                            </span>
                             <span class="glyphicon glyphicon-ok icon-save" ng-click="salvar(grupo);"
                                   ng-show="grupo.criador === iduser && $index === selectedrow"
                                   tooltip="Salvar grupo">

@@ -133,6 +133,25 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
                 }, function () {});
         };
 
+        $scope.listaUsuarios = function (grupo) {
+            $modal
+                .open({
+                    templateUrl: 'views/modal/list-users.html',
+                    controller: 'ListUserController',
+                    resolve: {
+                        ctrlScope: function () {
+                            return $scope
+                        },
+                        grupo: function () {
+                            return grupo
+                        },
+                        usuarioDB : function () {
+                            return Usuario
+                        }
+                    }
+                }).result.then(function () {}, function () {});
+        };
+
         $scope.listClick = function () {
 
         };
@@ -197,12 +216,31 @@ angular.module('lunchtime').controller('GroupController', ['$scope', '$rootScope
 
     }]);
 
+angular.module('lunchtime').controller('ListUserController', function ($scope, ctrlScope, grupo, usuarioDB) {
+
+    $scope.initLista = function () {
+        var uq = {
+            "grupos": grupo._id.$oid
+        };
+        usuarioDB.query(uq).then(function (usuarios) {
+            if(usuarios) {
+                $scope.usuarios = usuarios;
+            }
+        });
+    };
+
+    $scope.cancelarLista = function () {
+        $scope.$dismiss('cancel');
+    };
+});
+
+
 angular.module('lunchtime').controller('ListInviteController', function ($scope, ctrlScope, grupo, inviteDB, usuarioDB, $location) {
 
     $scope.initLista = function () {
         var uq = {
             "user" : ctrlScope.iduser,
-            "grupo": grupo._id.$oid
+            "grupos": grupo._id.$oid
         };
         inviteDB.query(uq).then(function (convites) {
             if(convites) {
