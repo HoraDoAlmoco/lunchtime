@@ -60,8 +60,6 @@ angular.module('lunchtime')
                 };
 
                 $scope.openUser = function (user, grupo) {
-                    //$state.transitionTo('user', {grupo: grupo, user: user});
-
                     $modal.open({
                         templateUrl: "views/modal/user.html",
                         controller: "UserController",
