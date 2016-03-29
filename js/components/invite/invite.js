@@ -21,9 +21,10 @@ angular.module('lunchtime').controller('AceptInviteController', ['$scope', '$roo
             Invites.query(iquery).then(function (invites) {
                 if (invites[0]) {
                     //tem o invite mesmo
-                    var diasDiff = Math.floor((new Date() - new Date(invites[0].data)) /(1000*60*60*24));
+                    $scope.invite = invites[0];
+                    var diasDiff = Math.floor((new Date() - new Date(invites[0].data)) / (1000 * 60 * 60 * 24));
                     //um mes
-                    if(diasDiff > 30) {
+                    if (diasDiff > 30) {
                         $scope.cadastro = false;
                         $scope.convite = false;
                         $scope.expirado = true;
@@ -62,11 +63,14 @@ angular.module('lunchtime').controller('AceptInviteController', ['$scope', '$roo
         };
 
         $scope.aceitar = function () {
-            if($scope.existeLunchTime) {
+            if ($scope.existeLunchTime) {
                 //ja estive é só fazer a associação e mandar para o login
                 $scope.userLunchTime.grupos.push($scope.grupoConvite._id.$oid);
                 $scope.userLunchTime.$saveOrUpdate().then(function () {
-                   $state.go('home');
+                    //aceitou eu excluo
+                    $scope.invite.$remove().then(function () {
+                        $state.go('home');
+                    });
                 });
             } else {
                 //nao existe o usuario.. chamar tela de cadastro.
@@ -76,11 +80,11 @@ angular.module('lunchtime').controller('AceptInviteController', ['$scope', '$roo
         };
 
         $scope.cadastrar = function () {
-            if($scope.userLunchTime.nome && $scope.userLunchTime.password && $scope.cpassword) {
-                if($scope.userLunchTime.password !== $scope.cpassword) {
+            if ($scope.userLunchTime.nome && $scope.userLunchTime.password && $scope.cpassword) {
+                if ($scope.userLunchTime.password !== $scope.cpassword) {
                     $scope.cadastroError = "A senha deve coincidir com a confirmação."
                 } else {
-                    if($scope.userLunchTime.password.length < 4) {
+                    if ($scope.userLunchTime.password.length < 4) {
                         $scope.cadastroError = "A senha deve ter pelo menos 4 digitos."
                     } else {
                         $scope.userLunchTime.$saveOrUpdate().then(function () {
