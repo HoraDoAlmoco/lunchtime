@@ -413,4 +413,20 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             }
         };
 
+        google.maps.event.addListener($scope.map, 'mousedown', function (e) {
+            $scope.mousedownx = e.pixel.x;
+            $scope.mousedowny = e.pixel.y;
+            $scope.mousedownstart = new Date().getTime();
+        });
+
+        google.maps.event.addListener($scope.map, 'mouseup', function (e) {
+            if(e.pixel.x == $scope.mousedownx && e.pixel.y == $scope.mousedowny){
+                var dif = new Date().getTime() - $scope.mousedownstart;
+                //300ms
+                if(dif > 300) {
+                    console.log(e.latLng.lat() + " " + e.latLng.lng());
+                }
+            }
+        });
+
     }]);
