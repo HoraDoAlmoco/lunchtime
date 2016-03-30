@@ -49,10 +49,9 @@
                             </span>
                             <span class="glyphicon glyphicon-trash icon-delete" ng-click="excluir(grupo);"
                                   ng-show="grupo.criador === iduser  && $index === selectedrow" tooltip="Excluir grupo">
-
                             </span>
                         </span>
-
+                        <hr class="hr-group" ng-class="{'hr-group-show':$index === selectedrow}">
                         <div class="group-detail" ng-class="{'detail-group-show':$index === selectedrow}">
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2">

@@ -605,6 +605,15 @@ input[type="checkbox"]:after,
     height: auto;
 }
 
+.hr-group {
+    display: none;
+    border-top: 1px solid transparent;
+}
+
+.hr-group-show {
+    display: block;
+}
+
 .add-group-fab-container {
     position: fixed;
     bottom: 0;
