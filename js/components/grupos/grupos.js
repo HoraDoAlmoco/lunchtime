@@ -240,7 +240,7 @@ angular.module('lunchtime').controller('ListInviteController', function ($scope,
     $scope.initLista = function () {
         var uq = {
             "user" : ctrlScope.iduser,
-            "grupos": grupo._id.$oid
+            "grupo": grupo._id.$oid
         };
         inviteDB.query(uq).then(function (convites) {
             if(convites) {
