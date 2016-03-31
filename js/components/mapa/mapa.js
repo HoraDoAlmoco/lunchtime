@@ -395,7 +395,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
         };
 
         $scope.addtogroup = function (nome) {
-            if (resultadoBusca[0] && (resultadoBusca[0].name.replace("'","") === nome)) {
+            if (resultadoBusca[0] && (resultadoBusca[0].name.replace("'", "") === nome)) {
                 //$state.transitionTo('addlocal', {grupo:$stateParams.grupo});
                 $modal.open({
                     templateUrl: "views/modal/local.html",
@@ -413,6 +413,25 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             }
         };
 
+        var menuStyle = {
+            menu: 'context_menu',
+            menuSeparator: 'context_menu_separator',
+            menuItem: 'btn btn-danger'
+        };
+
+        var contextMenuOptions = {
+            id: "map_rightclick",
+            eventName: "menu_item_selected",
+            classNames: menuStyle,
+            menuItems: [
+                {label: 'Adicionar novo local aqui', id: 'menu_option1'}
+            ]
+        };
+
+        var contextMenu = new google.maps.ContextMenu($scope.map, contextMenuOptions, function () {
+            console.log('optional callback');
+        });
+
         google.maps.event.addListener($scope.map, 'mousedown', function (e) {
             $scope.mousedownx = e.pixel.x;
             $scope.mousedowny = e.pixel.y;
@@ -420,13 +439,23 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
         });
 
         google.maps.event.addListener($scope.map, 'mouseup', function (e) {
-            if(e.pixel.x == $scope.mousedownx && e.pixel.y == $scope.mousedowny){
+            if (e.pixel.x == $scope.mousedownx && e.pixel.y == $scope.mousedowny) {
                 var dif = new Date().getTime() - $scope.mousedownstart;
                 //300ms
-                if(dif > 300) {
+                if (dif > 300) {
                     console.log(e.latLng.lat() + " " + e.latLng.lng());
+                    contextMenu.show(e.latLng);
                 }
             }
+        });
+
+        google.maps.event.addListener($scope.map, 'rightclick', function (e) {
+            console.log(e.latLng.lat() + " " + e.latLng.lng());
+            contextMenu.show(e.latLng);
+        });
+
+        google.maps.event.addListener(contextMenu, 'menu_item_selected', function (e) {
+            console.log(e);
         });
 
     }]);
