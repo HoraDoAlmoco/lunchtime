@@ -123,8 +123,14 @@ google.maps.ContextMenu.prototype.draw = function() {
 		var menuSize = new google.maps.Size(this.menu_.offsetWidth, this.menu_.offsetHeight);
 		var mousePosition = this.getProjection().fromLatLngToDivPixel(this.position_);
 
-		var left = mousePosition.x;
-		var top = mousePosition.y;
+		var e = {};
+		e.pixel = this.getProjection().fromLatLngToContainerPixel(this.position_);
+
+		//var left = mousePosition.x;
+		//var top = mousePosition.y;
+		var position = findAbsolutePosition(this, [self.el]),
+			left = position[0] + e.pixel.x,
+			top = position[1] + e.pixel.y;
 
 		if (mousePosition.x > mapSize.width - menuSize.width - this.pixelOffset.x) {
 			left = left - menuSize.width - this.pixelOffset.x;
@@ -141,6 +147,20 @@ google.maps.ContextMenu.prototype.draw = function() {
 		this.menu_.style.left = left + 'px';
 		this.menu_.style.top = top + 'px';
 	}
+};
+
+var findAbsolutePosition = function(obj)  {
+	var curleft = 0,
+		curtop = 0;
+
+	if (obj.offsetParent) {
+		do {
+			curleft += obj.offsetLeft;
+			curtop += obj.offsetTop;
+		} while (obj = obj.offsetParent);
+	}
+
+	return [curleft, curtop];
 };
 
 google.maps.ContextMenu.prototype.getVisible = function() {
@@ -191,9 +211,11 @@ google.maps.ContextMenu.prototype.onAdd = function() {
 
 	this.position_ = new google.maps.LatLng(0, 0);
 
-	google.maps.event.addListener(this.map_, 'click', function(mouseEvent) {
-		$this.hide();
-	});
+	google.maps.event.addListener(this.map_, 'click', function(mouseEvent) {$this.hide();});
+
+	google.maps.event.addListener(this.map, 'zoom_changed', function (mouseEvent) {$this.hide();});
+
+	google.maps.event.addListener(this.map, 'drag', function (mouseEvent) {$this.hide();});
 
 	this.getPanes().floatPane.parentNode.parentNode.appendChild(menu);
 

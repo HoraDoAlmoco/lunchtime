@@ -666,6 +666,11 @@ input[type="checkbox"]:after,
     margin-left: 15px;
 }
 
+.ls-list-selection {
+    max-height: 300px;
+    overflow: auto;
+}
+
 @media only screen
 and (max-device-width : 768px) {
     .tooltip {

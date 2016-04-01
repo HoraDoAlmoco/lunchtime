@@ -1,6 +1,6 @@
 angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais', '$filter', '$modal',
-    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, $filter, $modal) {
+    'Usuario', 'Grupo', 'Listas', 'Locais', '$filter', '$modal', '$timeout',
+    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, $filter, $modal, $timeout) {
 
         $scope.idgrupo = $stateParams.grupo;
         $scope.iduser = $rootScope.currentUser._id.$oid;
@@ -428,9 +428,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             ]
         };
 
-        var contextMenu = new google.maps.ContextMenu($scope.map, contextMenuOptions, function () {
-            console.log('optional callback');
-        });
+        var contextMenu = new google.maps.ContextMenu($scope.map, contextMenuOptions, function () {});
 
         google.maps.event.addListener($scope.map, 'mousedown', function (e) {
             $scope.mousedownx = e.pixel.x;
@@ -443,19 +441,46 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                 var dif = new Date().getTime() - $scope.mousedownstart;
                 //300ms
                 if (dif > 300) {
-                    console.log(e.latLng.lat() + " " + e.latLng.lng());
-                    contextMenu.show(e.latLng);
+                    $timeout(function (){
+                        contextMenu.show(e.latLng);
+                    }, 1000);
                 }
             }
         });
 
         google.maps.event.addListener($scope.map, 'rightclick', function (e) {
-            console.log(e.latLng.lat() + " " + e.latLng.lng());
             contextMenu.show(e.latLng);
         });
 
         google.maps.event.addListener(contextMenu, 'menu_item_selected', function (e) {
-            console.log(e);
+            var request = {
+                "location": new google.maps.LatLng(e.lat(), e.lng()),
+                "radius": '20',
+                "types": [
+                    'restaurant','food','cafe','bakery','bar',
+                    'liquor_store','meal_delivery','meal_takeaway',
+                    'night_club'
+                ]
+            };
+
+            service.nearbySearch(request, function (results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    resultadoBusca = results;
+                    $modal.open({
+                        templateUrl: "views/modal/local-selection.html",
+                        controller: "LocalSelectionController",
+                        resolve: {
+                            grupo: function () {
+                                return $stateParams.grupo
+                            }
+                        }
+                    }).result.then(function () {
+                            $state.reload();
+                        }, function () {
+
+                        });
+                }
+            });
         });
 
     }]);

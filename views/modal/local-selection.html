@@ -1,0 +1,72 @@
+<div class="modal-header text-center">
+    <h4 class="modal-title">Adicionar novo local</h4>
+</div>
+<div class="modal-body" ng-init="initLista()">
+    <div class="list-group ls-list-selection">
+        <div class="list-group-item active">
+            Locais próximos
+        </div>
+        <div class="list-group-item" ng-repeat="local in locaisBusca">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadio" id="local_{{local.place_id}}" ng-model="$parent.localselecionado" ng-value="local">
+                    <b>{{local.titulo}}</b> - {{local.endereco}}
+                </label>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal">
+        <fieldset>
+            <div class="form-group">
+                <label for="select" class="col-lg-2 control-label">Categoria</label>
+
+                <div class="col-lg-10">
+                    <select ng-options="tipo.label for tipo in tipos" class="form-control" ng-model="local.categoria"
+                            id="select">
+                        <option value="">-- Escolha uma categoria --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="valor" class="col-lg-2 control-label">Valor</label>
+
+                <div class="col-lg-10">
+                    <select id="valor" ng-model="local.valor" class="form-control">
+                        <option>$ - Barato</option>
+                        <option>$$ - Médio</option>
+                        <option>$$$ - Caro</option>
+                        <option>$$$$ - Surreal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="extra" class="col-lg-2 control-label">Informações Extras</label>
+
+                <div class="col-lg-10 input-group">
+                    <input id="extra" class="form-control" type="text" ng-model="extra" placeholder="Informação">
+
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary" ng-click="addExtra()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <ul class="list-group">
+                    <li class="list-group-item active">Informações Extras</li>
+                    <li class="list-group-item" ng-repeat="extra in local.infos">
+                        {{extra}}
+                        <button class="btn btn-danger pull-right" ng-click="removeExtra($index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="salvarLocal()">Salvar</button>
+    <button class="btn btn-warning" ng-click="cancelarAdd()">Cancelar</button>
+</div>

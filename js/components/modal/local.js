@@ -1,4 +1,4 @@
-angular.module('lunchtime').controller('LocalController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
+angular.module('lunchtime').controller('LocalSelectionController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
     'Usuario', 'Grupo', 'Listas', 'Locais', 'grupo',
     function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, grupo) {
         $scope.local = {
@@ -47,7 +47,7 @@ angular.module('lunchtime').controller('LocalController', ['$scope', '$rootScope
                 "valor": recuperaValor($scope.local.valor),
                 "infos": $scope.local.infos,
                 "votos": []
-            }
+            };
 
             Locais.query(query).then(function(locais){
                 if(locais[0]) {
