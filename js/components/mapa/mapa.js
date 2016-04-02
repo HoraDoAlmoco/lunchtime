@@ -77,6 +77,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             info.endereco = local.endereco;
             info.latitude = local.latitude;
             info.longitude = local.longitude;
+            info.place_id = local.place_id;
             info.votos = localGrupo.votos;
             info.votado = false;
             for (var a = 0; a < localGrupo.votos.length; a++) {
@@ -363,6 +364,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             marker.titulo = info.titulo;
             marker.categoria = info.categoria;
             marker.endereco = info.endereco;
+            marker.place_id = info.place_id;
             marker.extra = info.extra;
             marker.votos = info.votos;
             marker.votado = info.votado;
@@ -471,7 +473,10 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                         controller: "LocalSelectionController",
                         resolve: {
                             grupo: function () {
-                                return $stateParams.grupo
+                                return $stateParams.grupo;
+                            },
+                            markers: function () {
+                                return $scope.markers;
                             }
                         }
                     }).result.then(function () {

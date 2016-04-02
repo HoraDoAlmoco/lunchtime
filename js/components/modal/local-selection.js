@@ -1,6 +1,5 @@
-angular.module('lunchtime').controller('LocalSelectionController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais', 'grupo',
-    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, grupo) {
+angular.module('lunchtime').controller('LocalSelectionController', ['$scope', '$filter', 'Listas', 'Locais', 'grupo', 'markers',
+    function ($scope, $filter, Listas, Locais, grupo, markers) {
 
         $scope.locaisBusca = [];
         $scope.local = {
@@ -12,18 +11,22 @@ angular.module('lunchtime').controller('LocalSelectionController', ['$scope', '$
 
         $scope.initLista = function () {
             for (var i = 0; i < resultadoBusca.length; i++) {
-                var local = {
-                    "titulo": resultadoBusca[i] ? resultadoBusca[i].name : "",
-                    "place_id": resultadoBusca[i] ? resultadoBusca[i].place_id : "",
-                    "latitude": resultadoBusca[i] ? resultadoBusca[i].geometry.location.lat() : "",
-                    "longitude": resultadoBusca[i] ? resultadoBusca[i].geometry.location.lng() : "",
-                    "endereco": resultadoBusca[i] ? resultadoBusca[i].vicinity : "",
-                    "grupo": grupo,
-                    "categoria": "",
-                    "valor": "",
-                    "infos": []
-                };
-                $scope.locaisBusca.push(local);
+                var found = $filter('filter')(markers, {place_id: resultadoBusca[i].place_id}, true);
+                //evitar mostrar o que ja foi cadastrado.
+                if(!found[0]) {
+                    var local = {
+                        "titulo": resultadoBusca[i] ? resultadoBusca[i].name : "",
+                        "place_id": resultadoBusca[i] ? resultadoBusca[i].place_id : "",
+                        "latitude": resultadoBusca[i] ? resultadoBusca[i].geometry.location.lat() : "",
+                        "longitude": resultadoBusca[i] ? resultadoBusca[i].geometry.location.lng() : "",
+                        "endereco": resultadoBusca[i] ? resultadoBusca[i].vicinity : "",
+                        "grupo": grupo,
+                        "categoria": "",
+                        "valor": "",
+                        "infos": []
+                    };
+                    $scope.locaisBusca.push(local);
+                }
             }
         };
 
@@ -89,7 +92,6 @@ angular.module('lunchtime').controller('LocalSelectionController', ['$scope', '$
                     });
                 }
             });
-
         };
 
         function recuperaValor(valor) {
