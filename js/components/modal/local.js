@@ -1,4 +1,4 @@
-angular.module('lunchtime').controller('LocalSelectionController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
+angular.module('lunchtime').controller('LocalController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
     'Usuario', 'Grupo', 'Listas', 'Locais', 'grupo',
     function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, grupo) {
         $scope.local = {

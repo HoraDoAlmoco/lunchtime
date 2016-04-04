@@ -399,6 +399,9 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
         $scope.addtogroup = function (nome) {
             if (resultadoBusca[0] && (resultadoBusca[0].name.replace("'", "") === nome)) {
                 //$state.transitionTo('addlocal', {grupo:$stateParams.grupo});
+                if(fixedInfoWindow) {
+                    fixedInfoWindow.close();
+                }
                 $modal.open({
                     templateUrl: "views/modal/local.html",
                     controller: "LocalController",
@@ -408,7 +411,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                         }
                     }
                 }).result.then(function () {
-                        $state.reload();
+                        $scope.initMarkers();
                     }, function () {
 
                     });
@@ -480,7 +483,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                             }
                         }
                     }).result.then(function () {
-                            $state.reload();
+                            $scope.initMarkers();
                         }, function () {
 
                         });

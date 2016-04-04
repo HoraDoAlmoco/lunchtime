@@ -2,6 +2,7 @@ var service;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var resultadoBusca = {};
+var fixedInfoWindow;
 angular.module("lunchtime", [
     'ui.router', 'ngResource', 'mongolabResourceHttp',
     'ngCookies', 'ngAnimate', 'ui.bootstrap', 'ngMd5'
@@ -29,6 +30,7 @@ function fixInfoWindow() {
     var set = google.maps.InfoWindow.prototype.set;
     google.maps.InfoWindow.prototype.set = function (key, val) {
         var self = this;
+        fixedInfoWindow = this;
         if (key === "map") {
             if (!this.anchor && self.getPosition()) {
                 var lat = self.getPosition().lat();
@@ -58,7 +60,7 @@ function fixInfoWindow() {
 
                 service.nearbySearch(request, function (results, status) {
                     resultadoBusca = results;
-                    var link = angular.element("<button class='btn btn-danger map-add-group' set-on-click onclick='outaddtogroup(\"" + title.replace("'","") + "\")'>Adicionar ao grupo</button>");
+                    var link = angular.element("<button class='btn btn-danger map-add-group' set-on-click onclick='outaddtogroup(\"" + title.replace("'","") + "\");'>Adicionar ao grupo</button>");
                     angular.element(gmrev).html("");
                     angular.element(gmrev).removeAttr("jsaction");
                     angular.element(gmrev).append(angular.element("<div></div>").append(link));
