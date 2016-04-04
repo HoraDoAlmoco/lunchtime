@@ -35,3 +35,10 @@ angular.module('lunchtime').config(function ($stateProvider, $urlRouterProvider)
             controller: "AceptInviteController"
         });
 });
+
+angular.module('lunchtime').config(['ngToastProvider', function (ngToast) {
+    ngToast.configure({
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center'
+    });
+}]);

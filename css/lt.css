@@ -487,6 +487,10 @@ input[type="checkbox"]:after,
     position: relative;
 }
 
+.footer-edit-btn:hover {
+    color: #000000;
+}
+
 .fab-button {
     position: absolute;
     top: -30px;
@@ -542,7 +546,7 @@ input[type="checkbox"]:after,
 .lt-navbar-text {
     font-size: 22px;
     margin-top: 15px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .list-groups {
@@ -668,6 +672,11 @@ input[type="checkbox"]:after,
 
 .ls-list-selection {
     max-height: 300px;
+    overflow: auto;
+}
+
+.list-footer-users {
+    max-height: 180px;
     overflow: auto;
 }
 

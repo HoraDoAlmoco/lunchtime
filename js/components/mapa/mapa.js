@@ -1,6 +1,7 @@
 angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope', '$state', '$stateParams', '$cookies',
-    'Usuario', 'Grupo', 'Listas', 'Locais', '$filter', '$modal', '$timeout',
-    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, $filter, $modal, $timeout) {
+    'Usuario', 'Grupo', 'Listas', 'Locais', '$filter', '$modal', '$timeout', '$interval', 'ngToast',
+    function ($scope, $rootScope, $state, $stateParams, $cookies, Usuario, Grupo, Listas, Locais, $filter, $modal, $timeout,
+              $interval, ngToast) {
 
         $scope.idgrupo = $stateParams.grupo;
         $scope.iduser = $rootScope.currentUser._id.$oid;
@@ -12,6 +13,10 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             "nome": ""
         };
         $scope.openCloseCardClass = "";
+
+        $interval(function () {
+            $scope.initMarkers(true);
+        }, 120000);
 
         //pequeno teste para verificar se é o mesmo que esta no cookie.
         //enconomizo tempo e busca
@@ -165,6 +170,29 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
         function clearMarkers() {
             setMapOnAll(null);
         }
+
+        $scope.edit = function (marker) {
+            $modal.open({
+                templateUrl: "views/modal/edit-local.html",
+                controller: "EditLocalController",
+                resolve: {
+                    grupo: function () {
+                        return $stateParams.grupo;
+                    },
+                    localDB: function () {
+                        return Locais;
+                    },
+                    marker: function () {
+                        return marker;
+                    }
+                }
+            }).result.then(function () {
+                    $scope.initMarkers();
+                }, function () {
+
+                });
+
+        };
 
         $scope.votar = function (marker) {
             var mapCard = $(".map-card-detail-lg");
@@ -399,7 +427,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
         $scope.addtogroup = function (nome) {
             if (resultadoBusca[0] && (resultadoBusca[0].name.replace("'", "") === nome)) {
                 //$state.transitionTo('addlocal', {grupo:$stateParams.grupo});
-                if(fixedInfoWindow) {
+                if (fixedInfoWindow) {
                     fixedInfoWindow.close();
                 }
                 $modal.open({
@@ -433,7 +461,8 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             ]
         };
 
-        var contextMenu = new google.maps.ContextMenu($scope.map, contextMenuOptions, function () {});
+        var contextMenu = new google.maps.ContextMenu($scope.map, contextMenuOptions, function () {
+        });
 
         google.maps.event.addListener($scope.map, 'mousedown', function (e) {
             $scope.mousedownx = e.pixel.x;
@@ -446,9 +475,9 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                 var dif = new Date().getTime() - $scope.mousedownstart;
                 //300ms
                 if (dif > 300) {
-                    $timeout(function (){
+                    $timeout(function () {
                         contextMenu.show(e.latLng);
-                    }, 1000);
+                    }, 100);
                 }
             }
         });
@@ -462,8 +491,8 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                 "location": new google.maps.LatLng(e.lat(), e.lng()),
                 "radius": '20',
                 "types": [
-                    'restaurant','food','cafe','bakery','bar',
-                    'liquor_store','meal_delivery','meal_takeaway',
+                    'restaurant', 'food', 'cafe', 'bakery', 'bar',
+                    'liquor_store', 'meal_delivery', 'meal_takeaway',
                     'night_club'
                 ]
             };
@@ -487,6 +516,12 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                         }, function () {
 
                         });
+                } else {
+                    ngToast.create({
+                        'content': 'Nenhum local proximo encontrado',
+                        'timeout': 4000,
+                        'className': 'danger'
+                    });
                 }
             });
         });

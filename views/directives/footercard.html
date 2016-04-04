@@ -8,6 +8,9 @@
                 {{markerSelecionado.valor}}
                 <span class="valor-vazio">{{markerSelecionado.valorVazio}}</span>
                 <span ng-show="markerSelecionado.distancia > 0">-&nbsp;{{markerSelecionado.distancia}}&nbsp;m.</span>
+                <span class="fa fa-pencil-square-o lt-cursor-pointer footer-edit-btn"
+                      tooltip="Editar informações" tooltip-placement="right"
+                        ng-click="edit(markerSelecionado);"></span>
             </h5>
         </div>
         <div class="col-xs-6 divider">
@@ -15,7 +18,7 @@
                 <span class="glyphicon glyphicon-map-marker info-icon"></span>
                 <span class="info-text">{{markerSelecionado.endereco}}</span>
             </div>
-            <div>
+            <div class="list-footer-users">
                 <div ng-repeat="usuario in markerSelecionado.usuarios">
                     <img class="user-mini-port"
                          ng-src="http://dummyimage.com/36/db4537/ffffff&text={{usuario.substring(0,1)}}">
