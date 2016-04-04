@@ -13,6 +13,7 @@ angular.module('lunchtime').controller('LocalController', ['$scope', '$rootScope
             "infos" : []
         };
         $scope.extra = "";
+        $scope.erroString = "";
         $scope.tipos = Listas.tiposLocais;
 
         $scope.addExtra = function(){
@@ -35,40 +36,45 @@ angular.module('lunchtime').controller('LocalController', ['$scope', '$rootScope
         // close modal after clicking OK button
         $scope.salvarLocal = function() {
 
-            var query = {
-                "place_id" : $scope.local.place_id
-            };
+            if(!$scope.local.categoria.id || !$scope.local.valor) {
+                $scope.erroString = "Por favor selecione uma categoria e o valor";
+            } else {
 
-            //verificar o local ja existe na base em outro grupo.
-            var objGrupo = {
-                "grupo": grupo,
-                "titulo": $scope.local.titulo,
-                "categoria": $scope.local.categoria.id,
-                "valor": recuperaValor($scope.local.valor),
-                "infos": $scope.local.infos,
-                "votos": []
-            };
+                var query = {
+                    "place_id": $scope.local.place_id
+                };
 
-            Locais.query(query).then(function(locais){
-                if(locais[0]) {
-                    //trouxe algum valor
-                    locais[0].grupos.push(objGrupo);
-                    locais[0].$saveOrUpdate().then(function(){
-                        $scope.$close(true);
-                    });
-                } else {
-                    //novo local
-                    var novoLocal = new Locais();
-                    novoLocal.latitude = $scope.local.latitude;
-                    novoLocal.longitude = $scope.local.longitude;
-                    novoLocal.place_id = $scope.local.place_id;
-                    novoLocal.endereco = $scope.local.endereco;
-                    novoLocal.grupos = [objGrupo];
-                    novoLocal.$saveOrUpdate().then(function (){
-                        $scope.$close(true);
-                    });
-                }
-            });
+                //verificar o local ja existe na base em outro grupo.
+                var objGrupo = {
+                    "grupo": grupo,
+                    "titulo": $scope.local.titulo,
+                    "categoria": $scope.local.categoria.id,
+                    "valor": recuperaValor($scope.local.valor),
+                    "infos": $scope.local.infos,
+                    "votos": []
+                };
+
+                Locais.query(query).then(function (locais) {
+                    if (locais[0]) {
+                        //trouxe algum valor
+                        locais[0].grupos.push(objGrupo);
+                        locais[0].$saveOrUpdate().then(function () {
+                            $scope.$close(true);
+                        });
+                    } else {
+                        //novo local
+                        var novoLocal = new Locais();
+                        novoLocal.latitude = $scope.local.latitude;
+                        novoLocal.longitude = $scope.local.longitude;
+                        novoLocal.place_id = $scope.local.place_id;
+                        novoLocal.endereco = $scope.local.endereco;
+                        novoLocal.grupos = [objGrupo];
+                        novoLocal.$saveOrUpdate().then(function () {
+                            $scope.$close(true);
+                        });
+                    }
+                });
+            }
         };
 
         function recuperaValor(valor) {

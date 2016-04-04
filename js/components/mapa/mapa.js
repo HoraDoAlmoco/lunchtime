@@ -73,7 +73,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
             google.maps.event.trigger(selectedMarker, 'click');
         };
 
-        function criarInfoObj(localGrupo, local, distancia) {
+        function criarInfoObj (localGrupo, local, distancia) {
 
             var info = {};
 
@@ -178,9 +178,6 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                 resolve: {
                     grupo: function () {
                         return $stateParams.grupo;
-                    },
-                    localDB: function () {
-                        return Locais;
                     },
                     marker: function () {
                         return marker;
