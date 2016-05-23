@@ -285,6 +285,20 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
 
             if (!foraDaPagina) {
                 waitingDialog.show();
+
+                if (navigator.geolocation) {
+
+                    $.getJSON("http://ipinfo.io", function (ipinfo) {
+                        latLong = ipinfo.loc.split(",");
+                        var userLocation = new google.maps.LatLng(latLong[0], latLong[1]);
+                        var marker = new google.maps.Marker({
+                            position: userLocation,
+                            map: $scope.map,
+                            icon: "img/core/pegman.png"
+                        });
+                    });
+                }
+                /*
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
                         var lat = position.coords.latitude;
@@ -297,6 +311,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                         });
                     });
                 }
+                */
             }
             $scope.markerSelecionado = {};
             var query = {
