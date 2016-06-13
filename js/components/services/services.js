@@ -11,6 +11,9 @@ angular.module('lunchtime')
     .factory('Invites',function($mongolabResourceHttp){
         return $mongolabResourceHttp('invites');
     })
+    .factory('Estatisticas',function($mongolabResourceHttp){
+        return $mongolabResourceHttp('estatisticas');
+    })
     .factory('Listas', [function(){
         return {
             lunchtimeMapType : [
