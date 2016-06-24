@@ -285,7 +285,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
 
             if (!foraDaPagina) {
                 waitingDialog.show();
-
+                /*
                 if (navigator.geolocation) {
 
                     $.getJSON("http://ipinfo.io", function (ipinfo) {
@@ -298,7 +298,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                         });
                     });
                 }
-                /*
+                 */
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
                         var lat = position.coords.latitude;
@@ -311,7 +311,7 @@ angular.module('lunchtime').controller('MapaController', ['$scope', '$rootScope'
                         });
                     });
                 }
-                */
+
             }
             $scope.markerSelecionado = {};
             var query = {
